@@ -1,3 +1,4 @@
+"use client";
 import styles from "./Backdrop.module.css";
 const Backdrop = (props: {
   hideBackdrop: () => void;

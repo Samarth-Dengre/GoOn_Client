@@ -1,21 +1,30 @@
 "use client";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styles from "./Navbar.module.css";
-import Link from "next/link";
 import { SearchRounded } from "@mui/icons-material";
 import dynamic from "next/dynamic";
-import Backdrop from "@/components/Backdrop";
-import CircualarProgress from "@mui/material/CircularProgress";
+import Backdrop from "../Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Image from "next/image";
+import Logo from "../../../public/logo.png";
+import { useRouter } from "next/navigation";
+import CustomButton from "../CustomButton";
+import AuthContext from "@/app/store/user-context";
 
 // Lazy loading components
-const Login = dynamic(() => import("@/components/Login"), {
-  loading: () => <CircualarProgress />,
+const Login = dynamic(() => import("../Login"), {
+  loading: () => <CircularProgress />,
 });
-const Signup = dynamic(() => import("@/components/Signup"), {
-  loading: () => <CircualarProgress />,
+const Signup = dynamic(() => import("../Signup"), {
+  loading: () => <CircularProgress />,
 });
 
 export default function Navbar() {
+  const authContext = useContext(AuthContext);
+  const isLoggedIn = authContext.isAuthenticated;
+  if (!isLoggedIn) {
+    return null;
+  }
   const [showForm, setShowForm]: [
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>
@@ -25,6 +34,8 @@ export default function Navbar() {
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>
   ] = useState(false);
+
+  const router = useRouter();
 
   return (
     <>
@@ -43,6 +54,9 @@ export default function Navbar() {
         </Backdrop>
       )}
       <div className={styles.container}>
+        <div className={styles.logo} onClick={() => router.push("/")}>
+          <Image src={Logo} alt="logo" width={250} height={300} />
+        </div>
         <div className={styles["search-container"]}>
           <input
             type="text"
@@ -58,7 +72,7 @@ export default function Navbar() {
             />
           </button>
         </div>
-        <ul className={styles.links}>
+        {/* <ul className={styles.links}>
           <li>
             <Link href="/" className={styles.link}>
               Home
@@ -69,17 +83,20 @@ export default function Navbar() {
               About
             </Link>
           </li>
-        </ul>
+        </ul> */}
         <div className={styles.ButtonContainer}>
-          <button className={styles.registerButton} onClick={() => {}}>
-            Register Store
-          </button>
-          <button
-            className={styles.loginButton}
+          <CustomButton
+            title="Register Store"
+            onClick={() => router.push("/register")}
+            className={styles.registerButton}
+            disabled={false}
+          />
+          <CustomButton
+            title="Login"
             onClick={() => setShowForm(true)}
-          >
-            Login
-          </button>
+            className={styles.loginButton}
+            disabled={false}
+          />
         </div>
       </div>
     </>
