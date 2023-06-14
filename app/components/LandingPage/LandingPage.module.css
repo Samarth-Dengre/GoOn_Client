@@ -70,16 +70,18 @@
 
 .aboutUsContentLeft {
   width: 50%;
-  height: 100%;
+  height: inherit;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding: 1rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
+
 .aboutUsContentRight {
   width: 50%;
-  height: 100%;
+  height: inherit;
   display: flex;
   justify-content: center;
   align-items: center;

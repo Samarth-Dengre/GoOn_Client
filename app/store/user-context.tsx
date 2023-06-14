@@ -31,7 +31,6 @@ export const AuthContextProvider = ({
     setUser({
       userName: data.userName,
       email: data.email,
-      pic: data.pic,
     });
 
     // const prevPath = localStorage.getItem("prevPath");

@@ -10,7 +10,6 @@ export interface CustomButtonProps {
 export interface User {
   userName?: string;
   email?: string;
-  pic?: string;
 }
 
 export interface AuthContextProps {

@@ -8,7 +8,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Image from "next/image";
 import Backdrop from "../Backdrop";
 import CustomButton from "../CustomButton";
-import Link from "next/link";
 const Signup = dynamic(() => import("../Signup"), {
   loading: () => <CircularProgress />,
 });
@@ -27,9 +26,18 @@ const index = () => {
       <div className={styles.navBar}>
         <Image src="/logo_blue.png" alt="Go-On" width={100} height={100} />
         <div className={styles.navBar__RightItems}>
-          <Link href="#about" className={styles.navLink}>
-            <button className={styles.button}>About Us</button>
-          </Link>
+          <button
+            className={styles.button}
+            onClick={
+              // navigate to the about us section
+              () =>
+                document
+                  .getElementById("about")
+                  .scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            About Us
+          </button>
           <CustomButton
             title="Register your shop"
             onClick={() => {}}
@@ -108,6 +116,7 @@ const index = () => {
               </ul>
             </div>
           </div>
+          <div className={styles.aboutUsContentMid}></div>
           <div className={styles.aboutUsContentRight}>
             <div className={styles.aboutUsContentRightTitle}>
               <h3>Why Go.On?</h3>
