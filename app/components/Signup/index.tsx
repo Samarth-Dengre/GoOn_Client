@@ -34,6 +34,7 @@ export default function SignupForm({
   });
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("");
+  const [open, setOpen] = useState(false);
 
   const [showPassword, setShowPassword]: [
     boolean,
@@ -56,21 +57,25 @@ export default function SignupForm({
     ) {
       setMessage("Please fill all the fields");
       setSeverity("error");
+      setOpen(true);
       return;
     } else if (formData.email.includes("@") === false) {
       setMessage("Please enter a valid email");
       setSeverity("error");
+      setOpen(true);
       return;
     } else if (formData.password !== formData.confirmPassword) {
       setMessage("Passwords do not match");
       setSeverity("error");
+      setOpen(true);
       return;
     } else if (formData.password.length < 6) {
       setMessage("Password must be at least 6 characters long");
       setSeverity("error");
+      setOpen(true);
       return;
     }
-
+    return;
     // send data to server
     try {
       const response = await axios.post(signup_url, formData);
@@ -135,12 +140,14 @@ export default function SignupForm({
         />
       </Box>
       <Button variant="contained" onClick={submitFormHandler} sx={SubmitButton}>
-        <CustomizedSnackbars
-          message={message}
-          severity={severity}
-          buttonData="SIGNUP"
-        />
+        Signup
       </Button>
+      <CustomizedSnackbars
+        message={message}
+        severity={severity}
+        open={open}
+        handleClose={() => setOpen(false)}
+      />
       <Box
         sx={{
           display: "flex",

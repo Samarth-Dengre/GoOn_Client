@@ -4,12 +4,13 @@ import React, { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Buffer } from "buffer";
 import { User, AuthContextProps } from "../../utils/dataTypes";
+import { CircularProgress } from "@mui/material";
 
 const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
   user: {},
   token: "",
-  login: (token: string, data: User) => {},
+  login: (data: User, token: string) => {},
   logout: () => {},
 });
 
@@ -22,8 +23,9 @@ export const AuthContextProvider = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User>({});
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  const login = (token: string, data: User) => {
+  const login = (data: User, token: string) => {
     localStorage.setItem("auth", token);
     localStorage.setItem("user", JSON.stringify(data));
     setIsAuthenticated(true);
@@ -32,14 +34,6 @@ export const AuthContextProvider = ({
       userName: data.userName,
       email: data.email,
     });
-
-    // const prevPath = localStorage.getItem("prevPath");
-    // if (prevPath && prevPath !== "/login") {
-    //   localStorage.removeItem("prevPath");
-    //   router.push(prevPath);
-    // } else {
-    //   router.push("/dashboard");
-    // }
   };
 
   const logout = () => {
@@ -59,18 +53,20 @@ export const AuthContextProvider = ({
       const decodedData = JSON.parse(
         Buffer.from(encodedData, "base64").toString()
       );
-      login(accessToken, decodedData);
+      login(decodedData, accessToken);
     } else {
       const auth = localStorage.getItem("auth");
       const user = localStorage.getItem("user");
       if (auth && user) {
-        login(auth, JSON.parse(user));
+        login(JSON.parse(user), auth);
       }
     }
+    setLoading(false);
   }, []);
 
   return (
-    <AuthContext.Provider value={{
+    <AuthContext.Provider
+      value={{
         isAuthenticated,
         user,
         token,
@@ -78,39 +74,10 @@ export const AuthContextProvider = ({
         logout,
       }}
     >
-      {children}
+      {loading ? <CircularProgress /> : children}
     </AuthContext.Provider>
   );
 };
 
 export default AuthContext;
 
-//   useEffect(() => {
-//     if (location.pathname !== "/login") {
-//       localStorage.setItem("prevPath", location.pathname);
-//       router.push(location.pathname);
-//     } else {
-//       if (isAuthenticated) {
-//         router.push("/dashboard");
-//       }
-//     }
-//   }, [location.pathname]);
-
-//   const contextValue = {
-//     isAuthenticated: isAuthenticated,
-//     user: user,
-//     token: token,
-//     login: login,
-//     logout: logout,
-//   };
-
-//   return (
-//     <Fragment>
-//       <AuthContext.Provider value={contextValue}>
-//         {props.children}
-//       </AuthContext.Provider>
-//     </Fragment>
-//   );
-// };
-
-// export default AuthContext;
