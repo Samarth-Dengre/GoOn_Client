@@ -1,5 +1,5 @@
 .container {
-  width: 100vw;
+  min-width: 100vw;
   height: 4rem;
   display: flex;
   justify-content: space-around;
@@ -10,7 +10,7 @@
 }
 
 .logo {
-  width: fit-content;
+  width: 4rem;
   height: 4rem;
   display: flex;
   justify-content: center;
@@ -19,15 +19,22 @@
 .logo:hover {
   cursor: pointer;
 }
+.cartIcon {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
 
 /* This part is the search bar container */
 .search-container {
   display: flex;
-  width: 30vw;
+  width: 40vw;
+  max-width: 500px;
   height: 2.5rem;
-  background-color: white;
   border-radius: 0.2rem;
   overflow: hidden;
+  position: relative;
   box-shadow: 2px 2px 0.3rem 0.1rem rgba(0, 0, 0, 0.2);
 }
 
@@ -41,112 +48,42 @@
 }
 
 .searchButton {
-  width: 15%;
+  width: max-content;
   border: none;
-  background-color: transparent;
+  background-color: white;
   cursor: pointer;
-}
-
-/* This Part is navigatin Links */
-.links {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  list-style-type: none;
-  width: 15vw;
-  gap: 1rem;
   padding: 0;
-}
-
-.link {
-  text-decoration: none;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: 500;
-  transition: all 0.3s ease-in-out;
-}
-
-/* This part is rightmost button container */
-.ButtonContainer {
+  position: absolute;
+  right: 0;
+  height: 2.5rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  width: 18vw;
+  padding: 0 5px;
 }
 
-.loginButton {
-  border: none;
-  width: 35%;
-  height: 2.5rem;
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 1.3rem;
-  background-color: white;
-  border-radius: 0.2rem;
-  box-shadow: 2px 2px 0.3rem 0.1rem rgba(0, 0, 0, 0.2);
-}
-
-.registerButton {
-  border: none;
-  width: 60%;
-  height: 2.5rem;
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 1.3rem;
-  background-color: white;
-  border-radius: 0.2rem;
-  box-shadow: 2px 2px 0.3rem 0.1rem rgba(0, 0, 0, 0.2);
+.noDisplay {
+  display: none;
 }
 
 /* Media queries */
-@media screen and (max-width: 1342px) and (min-width: 971px) {
-  .ButtonContainer {
-    width: 25vw;
-  }
-  .links {
-    gap: 1.5rem;
+@media screen and (max-width: 660px) and (min-width: 560px) {
+  .search-container {
+    width: 300px;
   }
 }
 
-@media screen and (max-width: 970px) and (min-width: 801px) {
-  .ButtonContainer {
-    width: 25vw;
-  }
-  .registerButton {
-    font-size: 1rem;
-  }
-  .loginButton {
-    font-size: 1rem;
-  }
+@media screen and (max-width: 560px) and (min-width: 500px) {
   .search-container {
     width: 280px;
   }
-  .searchBar {
-    font-size: 0.9rem;
-  }
-  .links {
-    gap: 2rem;
-  }
-}
-
-@media screen and (max-width: 800px) and (min-width: 620px) {
-  .ButtonContainer {
-    width: 25vw;
-  }
-  .registerButton {
-    font-size: 1rem;
-  }
-  .loginButton {
-    font-size: 1rem;
+  .logo{
+    width: 3rem;
+    height: 3rem;
   }
 
-  .link {
-    font-size: 1.2rem;
-  }
-  .searchBar {
-    font-size: 0.9rem;
-  }
-  .search-container {
-    width: 280px;
+  .logoImage{
+    width: 200px;
+    height: 200px;
   }
 }

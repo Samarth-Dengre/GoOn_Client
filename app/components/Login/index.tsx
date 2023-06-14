@@ -76,6 +76,7 @@ export default function LoginForm({
     <Box sx={FormContainer}>
       <h1>Login</h1>
       <TextField
+        type="email"
         label="Email"
         id="outlined-start-adornment"
         sx={InputFields}
