@@ -19,3 +19,17 @@ export interface AuthContextProps {
   login: (data: User, token: string) => void;
   logout: () => void;
 }
+
+export interface Category {
+  _id: string;
+  categoryName: string;
+}
+export interface Store {
+  _id: string;
+  storeName: string;
+  storeAddress: string;
+  storeContact: string;
+  storeEmail: string;
+  isVerified: boolean;
+  storeCategory: Category[];
+}

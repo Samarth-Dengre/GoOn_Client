@@ -22,9 +22,9 @@ import {
 import CustomizedSnackbars from "../CustomComponents/SnackBar";
 
 export default function SignupForm({
-  showSignupForm,
+  showLoginForm,
 }: {
-  showSignupForm: () => void;
+  showLoginForm: () => void;
 }) {
   const [formData, setFormData] = useState({
     userName: "",
@@ -75,7 +75,7 @@ export default function SignupForm({
       setOpen(true);
       return;
     }
-    return;
+
     // send data to server
     try {
       const response = await axios.post(signup_url, formData);
@@ -159,7 +159,7 @@ export default function SignupForm({
         <Button
           variant="text"
           sx={{ color: "rgb(0, 109, 198)" }}
-          onClick={showSignupForm}
+          onClick={showLoginForm}
         >
           Login
         </Button>

@@ -63,6 +63,7 @@ export const AuthContextProvider = ({
     }
     setLoading(false);
   }, []);
+
   return (
     <AuthContext.Provider
       value={{

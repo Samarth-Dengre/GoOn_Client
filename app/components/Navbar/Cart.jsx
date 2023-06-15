@@ -5,7 +5,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export default function Cart() {
   return (
-    <Badge badgeContent={4} color="error">
+    <Badge badgeContent={2} color="error">
         <ShoppingCartIcon sx={{
             color: "white",
         }} />

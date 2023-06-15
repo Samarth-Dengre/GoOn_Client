@@ -49,24 +49,27 @@ const items = [
 
 function Category() {
   return (
-    <div className={styles.container}>
-      {items.map((item, index) => (
-        <div className={styles.category} key={index}>
-          <Image
-            src={item.src}
-            alt={item.alt}
-            width={100}
-            height={100}
-            className={styles.image}
-          />
-          <span>
-            <Link href={`/categories${item.path}`} className={styles.link}>
-              {item.alt}
-            </Link>
-          </span>
-        </div>
-      ))}
-    </div>
+    <>
+      <div className={styles.container}>
+        {items.map((item, index) => (
+          <div className={styles.category} key={index}>
+            <Image
+              src={item.src}
+              alt={item.alt}
+              width={100}
+              height={100}
+              className={styles.image}
+            />
+            <span>
+              <Link href={`/categories${item.path}`} className={styles.link}>
+                {item.alt}
+              </Link>
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className={styles.borderBottom}></div>
+    </>
   );
 }
 

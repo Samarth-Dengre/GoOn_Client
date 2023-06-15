@@ -8,10 +8,10 @@ const Logo = () => {
   return (
     <div className={styles.logo} onClick={() => router.push("/")}>
       <Image
-        src="/logo.png"
+        src="/logo_white.png"
         alt="Go.On"
-        width={250}
-        height={300}
+        width={100}
+        height={70}
         className={styles.logoImage}
       />
     </div>

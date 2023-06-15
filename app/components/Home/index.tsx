@@ -1,3 +1,4 @@
+// This is a server side rendered component
 import styles from "./Home.module.css";
 import Category from "./Category";
 import Stores from "./Stores";

@@ -10,7 +10,7 @@
 }
 
 .logo {
-  width: 4rem;
+  width: 5.3rem;
   height: 4rem;
   display: flex;
   justify-content: center;
@@ -19,6 +19,7 @@
 .logo:hover {
   cursor: pointer;
 }
+
 .cartIcon {
   width: 2rem;
   height: 2rem;
@@ -28,6 +29,7 @@
 
 /* This part is the search bar container */
 .search-container {
+  background-color: pink;
   display: flex;
   width: 40vw;
   max-width: 500px;
@@ -66,10 +68,29 @@
   display: none;
 }
 
+.loginButton {
+  width: 6rem;
+  height: 2.5rem;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  box-shadow: 0 0 0.3rem 0.1rem rgba(0, 0, 0, 0.2);
+}
+
 /* Media queries */
 @media screen and (max-width: 660px) and (min-width: 560px) {
   .search-container {
     width: 300px;
+  }
+  .loginButton {
+    width: 5.5rem;
+    font-size: 1rem;
   }
 }
 
@@ -77,13 +98,8 @@
   .search-container {
     width: 280px;
   }
-  .logo{
-    width: 3rem;
-    height: 3rem;
-  }
-
-  .logoImage{
-    width: 200px;
-    height: 200px;
+  .logo {
+    width: 2.7rem;
+    height: 2.7rem;
   }
 }

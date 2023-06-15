@@ -31,6 +31,12 @@
   color: black;
 }
 
+.borderBottom {
+  border: 1px solid #d4d4d4;
+  width: 85vw;
+  margin: auto;
+}
+
 /* Media Queries */
 @media screen and (max-width: 1200px) and (min-width: 1000px) {
   .container {
