@@ -1,6 +1,6 @@
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
-import { AuthContextProvider } from "@/app/store/user-context";
+import { AuthContextProvider } from "@/app/context/user-context";
 
 export const metadata = {
   title: "Create Next App",

@@ -2,7 +2,7 @@
 import { useContext, useState } from "react";
 import styles from "./Navbar.module.css";
 import Logo from "./Logo";
-import AuthContext from "@/app/store/user-context";
+import AuthContext from "@/app/context/user-context";
 import SearchBar from "./SearchBar";
 import Cart from "./Cart";
 import CustomButton from "../CustomComponents/CustomButton";
@@ -10,6 +10,7 @@ import Backdrop from "../Backdrop";
 import LoginForm from "../Login";
 import dynamic from "next/dynamic";
 import { CircularProgress } from "@mui/material";
+import Profile from "./ProfileIcon";
 const SignupForm = dynamic(() => import("../Signup"), {
   ssr: false,
   loading: () => <CircularProgress />,
@@ -24,7 +25,7 @@ export default function Navbar() {
 
   return (
     <>
-      {showBackdrop && (
+      {!isLoggedIn && showBackdrop && (
         <Backdrop
           hideBackdrop={() => {
             setShowBackdrop(false);
@@ -44,7 +45,10 @@ export default function Navbar() {
           <SearchBar />
         </div>
         {isLoggedIn ? (
-          <Cart />
+          <div className={styles.rightButtonsContainer}>
+            <Cart />
+            <Profile />
+          </div>
         ) : (
           <CustomButton
             title="Login"

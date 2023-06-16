@@ -2,16 +2,14 @@
 
 import React from "react";
 import { fetch_stores_url } from "@/utils/routes";
-import SingleStore from "./SingleStore";
+import SingleStore from "../../StoreCard";
 import styles from "./Stores.module.css";
 import { Store } from "@/utils/dataTypes";
 
 const getStores = async () => {
   const res = await fetch(fetch_stores_url, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    next: { revalidate: 3600 },
   });
   const stores = await res.json();
   return stores;
@@ -22,9 +20,12 @@ async function index() {
 
   return (
     <div className={styles.container}>
-      {all_stores.map((store: Store, index: number) => (
-        <SingleStore key={index} store={store} />
-      ))}
+      <h1 className={styles.heading}>Stores</h1>
+      <div className={styles.allStores__container}>
+        {all_stores.map((store: Store, index: number) => (
+          <SingleStore key={index} store={store} showCategory={true} />
+        ))}
+      </div>
     </div>
   );
 }

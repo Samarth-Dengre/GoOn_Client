@@ -32,4 +32,6 @@ export interface Store {
   storeEmail: string;
   isVerified: boolean;
   storeCategory: Category[];
+  storeImage: string;
+  storeDescription: string[];
 }

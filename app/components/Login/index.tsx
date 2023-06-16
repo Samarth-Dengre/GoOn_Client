@@ -13,7 +13,7 @@ import { InputFields, FormContainer, SubmitButton } from "./styles";
 import CustomizedSnackbars from "../CustomComponents/SnackBar";
 import { login_url } from "@/utils/routes";
 import axios from "axios";
-import AuthContext from "@/app/store/user-context";
+import AuthContext from "@/app/context/user-context";
 
 export default function LoginForm({
   showSignupForm,
