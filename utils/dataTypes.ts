@@ -2,7 +2,7 @@ import { MouseEventHandler } from "react";
 
 export interface CustomButtonProps {
   title: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  handleClick?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   className?: string;
 }
@@ -24,6 +24,19 @@ export interface Category {
   _id: string;
   categoryName: string;
 }
+
+export interface Product {
+  _id: string;
+  productName: string;
+  productDescription?: string;
+  productPrice: string;
+  productImage: string;
+  productStore?: Store;
+  productrating: {
+    rating: number;
+    numReviews: number;
+  };
+}
 export interface Store {
   _id: string;
   storeName: string;
@@ -33,5 +46,10 @@ export interface Store {
   isVerified: boolean;
   storeCategory: Category[];
   storeImage: string;
-  storeDescription: string[];
+  storeDescription?: string[];
+  storeProducts?: Product[];
+  storerating: {
+    rating: number;
+    numReviews: number;
+  };
 }

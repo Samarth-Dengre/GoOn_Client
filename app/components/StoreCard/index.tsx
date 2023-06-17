@@ -1,9 +1,8 @@
-"use client";
 import React from "react";
 import styles from "./Store.module.css";
 import { Store } from "@/utils/dataTypes";
 import Image from "next/image";
-import { Chip } from "@mui/material";
+import Link from "next/link";
 
 const SingleStore = ({
   store,
@@ -39,11 +38,16 @@ const SingleStore = ({
         <div className={styles.chip__container}>
           {store.storeCategory.map(({ categoryName }, index) => {
             return (
-              <Chip key={index} label={categoryName} className={styles.chip} />
+              <div key={index} className={styles.chip}>
+                {categoryName}
+              </div>
             );
           })}
         </div>
       )}
+      <Link href={`/store/${store._id}`} className={styles.visit_store_link}>
+        Visit Store
+      </Link>
     </div>
   );
 };

@@ -6,7 +6,7 @@ const CustomButton = (props: CustomButtonProps) => {
   return (
     <button
       className={props.className}
-      onClick={props.onClick}
+      onClick={props.handleClick}
       disabled={props.disabled}
     >
       {props.title}

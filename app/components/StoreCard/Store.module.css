@@ -59,9 +59,21 @@
   color: white;
   border-radius: 0.5rem;
   width: max-content;
+  padding: 0.5rem;
 }
 
 .chip:hover {
   cursor: pointer;
   background-color: rgb(0, 102, 218);
+}
+
+.visit_store_link {
+  width: max-content;
+  text-decoration: none;
+  color: white;
+  background-color: rgb(0, 119, 255);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  margin: 0 auto;
+  margin-bottom: 1rem;
 }

@@ -29,7 +29,6 @@
 
 /* This part is the search bar container */
 .search-container {
-  background-color: pink;
   display: flex;
   width: 40vw;
   max-width: 500px;
@@ -38,6 +37,7 @@
   overflow: hidden;
   position: relative;
   box-shadow: 2px 2px 0.3rem 0.1rem rgba(0, 0, 0, 0.2);
+  background-color: white;
 }
 
 .searchBar {
