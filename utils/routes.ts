@@ -4,3 +4,4 @@ export const login_url: string = host + "/auth/login";
 export const fetch_stores_url: string = host + "/stores";
 export const fetch_store_by_categories_url: string = host + "/categories";
 export const fetch_store_by_id_url: string = host + "/stores";
+export const fetch_products_by_id_url: string = host + "/products";

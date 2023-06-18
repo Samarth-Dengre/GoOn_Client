@@ -7,9 +7,32 @@ export interface CustomButtonProps {
   className?: string;
 }
 
+export interface Order {
+  _id: string;
+  total: string;
+  orderStatus: string;
+  orderProducts: { product: Product; quantity: number }[];
+  modeOfPayment: string;
+}
+
 export interface User {
   userName?: string;
   email?: string;
+  cart?: { product: Product; quantity: number }[];
+  orders?: Order[];
+}
+
+export interface Product {
+  _id: string;
+  productName: string;
+  productDescription?: string;
+  productPrice: string;
+  productImage: string[];
+  productStore?: Store;
+  productrating: {
+    rating: number;
+    numReviews: number;
+  };
 }
 
 export interface AuthContextProps {
@@ -18,6 +41,8 @@ export interface AuthContextProps {
   token: string;
   login: (data: User, token: string) => void;
   logout: () => void;
+  cart: { product: Product; quantity: number }[];
+  addToCart: (product: Product, quantity: number) => void;
 }
 
 export interface Category {
@@ -25,18 +50,6 @@ export interface Category {
   categoryName: string;
 }
 
-export interface Product {
-  _id: string;
-  productName: string;
-  productDescription?: string;
-  productPrice: string;
-  productImage: string;
-  productStore?: Store;
-  productrating: {
-    rating: number;
-    numReviews: number;
-  };
-}
 export interface Store {
   _id: string;
   storeName: string;

@@ -74,6 +74,8 @@
   margin: auto;
 }
 
+/* These are the css related to products container*/
+
 /* media queries */
 @media screen and (max-width: 1250px) and (min-width: 700px) {
   .store__details {

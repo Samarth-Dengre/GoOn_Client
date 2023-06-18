@@ -3,7 +3,7 @@ import React from "react";
 import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
 
-const RatingStars = ({ value }) => {
+const RatingStars = ({ value }: { value: number }) => {
   return (
     <Rating
       name="text-feedback"

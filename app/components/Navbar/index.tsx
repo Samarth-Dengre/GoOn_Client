@@ -53,7 +53,7 @@ export default function Navbar() {
           <CustomButton
             title="Login"
             className={styles.loginButton}
-            onClick={() => setShowBackdrop(true)}
+            handleClick={() => setShowBackdrop(true)}
             disabled={false}
           />
         )}
