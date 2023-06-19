@@ -12,7 +12,7 @@ const getCategoryId = (category: string) => {
   if (category === "furniture") return 4;
   if (category === "beauty") return 7;
   if (category === "mobile-laptops") return 5;
-  if (category === "sanitaryware") return 6;
+  if (category === "footwear") return 9;
 };
 
 export const generateStaticParams = () => {

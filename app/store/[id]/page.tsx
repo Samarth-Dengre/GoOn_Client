@@ -28,8 +28,8 @@ const StorePage = async ({ params }: { params: { id: string } }) => {
           <Image
             src={store.storeImage}
             alt={store.storeName}
-            width={100}
-            height={100}
+            width={1000}
+            height={1000}
             className={styles.store__details__image}
           />
         </div>
@@ -62,19 +62,19 @@ const StorePage = async ({ params }: { params: { id: string } }) => {
             About Us
           </h2>
           {store.storeDescription?.map((description, index) => (
-            <p
+            <li
               key={index}
               className={styles.store__details__description__container__text}
             >
               {description}
-            </p>
+            </li>
           ))}
         </div>
       </div>
-      <div className={styles.store__prooducts__container}>
-        <h2 className={styles.store__prooducts__container__heading}>
-          Our Products
-        </h2>
+      <h2 className={styles.store__products__container__heading}>
+        What We Offer
+      </h2>
+      <div className={styles.store__products__container}>
         {store.storeProducts?.map((product, index) => (
           <ProductCard key={index} product={product} />
         ))}

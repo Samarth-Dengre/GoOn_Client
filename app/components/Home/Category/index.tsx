@@ -40,9 +40,9 @@ const items = [
     path: "/furniture",
   },
   {
-    src: "/sanitary.jpg",
-    alt: "Sanitaryware",
-    path: "/sanitaryware",
+    src: "/footwear.png",
+    alt: "Footwear",
+    path: "/footwear",
   },
 ];
 

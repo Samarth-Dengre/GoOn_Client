@@ -2,6 +2,8 @@ import { Product } from "@/utils/dataTypes";
 import styles from "./ProductCard.module.css";
 import Image from "next/image";
 import ButtonsContainer from "./ButtonsContainer";
+import RatingStars from "../CustomComponents/RatingStars";
+import Icons from "../CustomComponents/Icons";
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
@@ -17,16 +19,26 @@ const ProductCard = ({ product }: { product: Product }) => {
       </div>
       <div className={styles.product__details__container}>
         <p className={styles.product__details__container__text}>
-          <strong>Product Name: </strong>
           {product.productName}
         </p>
         <p className={styles.product__details__container__text}>
           <strong>Product Price: </strong>
-          {product.productPrice}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Icons name="AttachMoney" size={17} color="black" />
+            {product.productPrice}
+          </div>
         </p>
         <p className={styles.product__details__container__text}>
           <strong>Product Rating: </strong>
-          {product.productrating.rating}
+          <RatingStars
+            value={product.productrating.rating}
+            count={product.productrating.numReviews}
+          />
         </p>
       </div>
       <ButtonsContainer product={product} />

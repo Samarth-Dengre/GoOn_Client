@@ -60,17 +60,19 @@
   margin: 0 auto;
 }
 
-.store__products__container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid #c9c9c9;
+.store__details__description__container__text {
+  margin: 5px 0;
 }
 
-.store__prooducts__container__heading {
+.store__products__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem;
+}
+
+.store__products__container__heading {
   margin: auto;
 }
 

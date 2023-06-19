@@ -26,7 +26,7 @@ const ButtonsContainer = ({ product }: { product: Product }) => {
       />
       <CustomButton
         title="View Item"
-        className={styles.product__buttons__container__button}
+        className={`${styles.product__buttons__container__button} ${styles.outlined}`}
         disabled={false}
         handleClick={viewItemHandler}
       />
