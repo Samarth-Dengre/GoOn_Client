@@ -76,7 +76,11 @@ const StorePage = async ({ params }: { params: { id: string } }) => {
       </h2>
       <div className={styles.store__products__container}>
         {store.storeProducts?.map((product, index) => (
-          <ProductCard key={index} product={product} />
+          <ProductCard
+            key={index}
+            product={product.product}
+            price={product.price}
+          />
         ))}
       </div>
     </div>

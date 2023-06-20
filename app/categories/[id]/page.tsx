@@ -39,7 +39,7 @@ export const generateStaticParams = () => {
       id: "mobile-laptops",
     },
     {
-      id: "sanitaryware",
+      id: "footwear",
     },
   ];
 };
@@ -48,7 +48,7 @@ const getSoreByCategory = async (category: string) => {
   const id = getCategoryId(category);
   const res = await fetch(`${fetch_store_by_categories_url}/?category=${id}`, {
     method: "GET",
-    next: { revalidate: 3600 },
+    next: { revalidate: 10 },
   });
   const stores = await res.json();
   return stores;

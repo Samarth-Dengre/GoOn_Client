@@ -11,13 +11,9 @@ export const FormContainer = {
   borderRadius: "1ch",
   boxShadow: "0 0 1ch 0.5ch rgba(0, 0, 0, 0.2)",
   // add media query
-  "@media screen and (max-width: 500px)": {
-    width: "100%",
+  "@media screen and (max-width: 550px)": {
+    width: "85vw",
     height: "100%",
-    margin: "auto",
-    padding: "2ch",
-    backgroundColor: "white",
-    borderRadius: "1ch",
   },
 };
 
@@ -26,14 +22,9 @@ export const InputFields = {
   mb: "2ch",
   width: "50ch",
   //   add media query
-  "@media screen and (max-width: 500px)": {
+  "@media screen and (max-width: 550px)": {
     width: "100%",
   },
-};
-
-export const PasswordField = {
-  mb: "2ch",
-  width: "24.5ch",
 };
 
 export const PasswordContainer = {
@@ -43,6 +34,20 @@ export const PasswordContainer = {
   width: "55ch",
   margin: "auto",
   gap: "1ch",
+  //   add media query
+  "@media screen and (max-width: 550px)": {
+    width: "85vw",
+    flexDirection: "column",
+  },
+};
+
+export const PasswordField = {
+  mb: "2ch",
+  width: "24.5ch",
+  //   add media query
+  "@media screen and (max-width: 550px)": {
+    width: "100%",
+  },
 };
 
 export const SubmitButton = {

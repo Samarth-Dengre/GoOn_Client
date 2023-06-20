@@ -7,11 +7,11 @@ const Icons = ({
   size,
   color,
 }: {
-  name: string;
+  name: keyof typeof MUI;
   size: number;
   color: string;
 }) => {
-  const Icon: any = MUI[name];
+  const Icon = MUI[name] as React.ElementType;
   return <Icon sx={{ fontSize: size, color: color }} />;
 };
 

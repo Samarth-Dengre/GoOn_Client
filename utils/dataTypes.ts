@@ -26,9 +26,9 @@ export interface Product {
   _id: string;
   productName: string;
   productDescription?: string;
-  productPrice: string;
+  productMRP: string;
   productImage: string[];
-  productStore?: Store;
+  productStore?: Store[];
   productrating: {
     rating: number;
     numReviews: number;
@@ -60,7 +60,7 @@ export interface Store {
   storeCategory: Category[];
   storeImage: string;
   storeDescription?: string[];
-  storeProducts?: Product[];
+  storeProducts?: { product: Product; price: number }[];
   storerating: {
     rating: number;
     numReviews: number;

@@ -29,7 +29,7 @@ export default function Navbar() {
         <Backdrop
           hideBackdrop={() => {
             setShowBackdrop(false);
-            setShowLogin(false);
+            setShowLogin(true);
           }}
         >
           {showLogin ? (

@@ -10,6 +10,7 @@
 .heading {
   margin: auto;
   margin-bottom: -3rem;
+  font-family: var(--font-mukta);
 }
 
 .allStores__container {

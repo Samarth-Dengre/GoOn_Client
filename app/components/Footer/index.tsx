@@ -1,6 +1,5 @@
-"use client";
+import Icons from "../CustomComponents/Icons";
 import styles from "./Footer.module.css";
-import { GitHub, Instagram, Language, LinkedIn } from "@mui/icons-material";
 
 function Footer() {
   return (
@@ -12,7 +11,7 @@ function Footer() {
           target="_blank"
           className={styles.link}
         >
-          <LinkedIn />
+          <Icons name="LinkedIn" size={25} color="white" />
         </a>
         <a
           href="https://www.github.com/samarth-dengre/"
@@ -20,7 +19,7 @@ function Footer() {
           target="_blank"
           className={styles.link}
         >
-          <GitHub />
+          <Icons name="GitHub" size={25} color="white" />
         </a>
         <a
           href="https://samarthdengre.vercel.app/"
@@ -28,7 +27,7 @@ function Footer() {
           target="_blank"
           className={styles.link}
         >
-          <Language />
+          <Icons name="Language" size={25} color="white" />
         </a>
         <a
           href="https://instagram.com/samarth_dengre"
@@ -36,7 +35,7 @@ function Footer() {
           target="_blank"
           className={styles.link}
         >
-          <Instagram />
+          <Icons name="Instagram" size={25} color="white" />
         </a>
       </div>
       <div className={styles.description}>Made by Samarth Dengre</div>

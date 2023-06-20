@@ -1,7 +1,7 @@
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 import { AuthContextProvider } from "@/app/context/user-context";
-import { Lato } from "next/font/google";
+import { Lato, Mukta } from "next/font/google";
 
 export const metadata = {
   title: "Create Next App",
@@ -14,6 +14,12 @@ const lato = Lato({
   weight: ["400"],
 });
 
+const mukta = Mukta({
+  subsets: ["latin"],
+  variable: "--font-mukta",
+  weight: ["300"],
+});
+
 export default function RootLayout({
   children,
 }: {
@@ -21,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <html lang="en" className={`${lato.variable}`}>
+      <html lang="en" className={`${lato.variable} ${mukta.variable}`}>
         <body
           style={{
             margin: 0,

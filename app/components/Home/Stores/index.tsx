@@ -20,7 +20,7 @@ async function index() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.heading}>Stores</h1>
+      <h1 className={styles.heading}>Some Stores Registered With Us</h1>
       <div className={styles.allStores__container}>
         {all_stores.map((store: Store, index: number) => (
           <SingleStore key={index} store={store} showCategory={true} />

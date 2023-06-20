@@ -10,6 +10,11 @@ export const FormContainer = {
   backgroundColor: "white",
   borderRadius: "1ch",
   boxShadow: "0 0 1ch 0.5ch rgba(0, 0, 0, 0.2)",
+  //   add media query
+  "@media screen and (max-width: 550px)": {
+    width: "85vw",
+    height: "100%",
+  },
 };
 
 export const InputFields = {
@@ -17,7 +22,7 @@ export const InputFields = {
   mb: "2ch",
   width: "50ch",
   //   add media query
-  "@media screen and (max-width: 500px)": {
+  "@media screen and (max-width: 550px)": {
     width: "100%",
   },
 };

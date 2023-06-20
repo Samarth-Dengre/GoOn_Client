@@ -5,7 +5,7 @@ import ButtonsContainer from "./ButtonsContainer";
 import RatingStars from "../CustomComponents/RatingStars";
 import Icons from "../CustomComponents/Icons";
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({ product, price }: { product: Product, price: number }) => {
   return (
     <div className={styles.product__container}>
       <div className={styles.product__image__container}>
@@ -30,7 +30,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             }}
           >
             <Icons name="AttachMoney" size={17} color="black" />
-            {product.productPrice}
+            {price}
           </div>
         </p>
         <p className={styles.product__details__container__text}>
