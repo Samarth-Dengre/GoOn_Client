@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Buffer } from "buffer";
 import { User, AuthContextProps, Product } from "../../utils/dataTypes";
 import { CircularProgress } from "@mui/material";
+import { manageCart_url } from "@/utils/routes";
 
 const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
@@ -30,47 +31,71 @@ export const AuthContextProvider = ({
     []
   );
 
-  const addToCart = (product: Product, quantity: number) => {
+  const addToCart = async (product: Product, quantity: number) => {
+    let cartData;
     if (quantity < 0) {
       // remove that much quantity from cart
       const productIndex = cart.findIndex(
         (cartProduct) => cartProduct.product._id === product._id
       );
       if (productIndex !== -1) {
-        const newCart = [...cart];
-        newCart[productIndex].quantity -= 1;
-        if (newCart[productIndex].quantity === 0) {
-          newCart.splice(productIndex, 1);
+        cartData = [...cart];
+        cartData[productIndex].quantity -= 1;
+        if (cartData[productIndex].quantity === 0) {
+          cartData.splice(productIndex, 1);
         }
-        setCart(newCart);
-        localStorage.setItem("cart", JSON.stringify(newCart));
-        return;
+        setCart(cartData);
+        localStorage.setItem("cart", JSON.stringify(cartData));
       }
     } else {
       const productIndex = cart.findIndex(
         (cartProduct) => cartProduct.product._id === product._id
       );
       if (productIndex !== -1) {
-        const newCart = [...cart];
-        newCart[productIndex].quantity += 1;
-        setCart(newCart);
-        localStorage.setItem("cart", JSON.stringify(newCart));
-        return;
+        cartData = [...cart];
+        cartData[productIndex].quantity += 1;
+        setCart(cartData);
+        localStorage.setItem("cart", JSON.stringify(cartData));
+      } else {
+        cartData = [...cart, { product, quantity }];
+        setCart(cartData);
+        localStorage.setItem("cart", JSON.stringify(cartData));
       }
-      setCart([...cart, { product, quantity }]);
-      localStorage.setItem(
-        "cart",
-        JSON.stringify([...cart, { product, quantity }])
-      );
+    }
+
+    if (isAuthenticated) {
+      const auth = token;
+      if (auth) {
+        try {
+          const response = await fetch(manageCart_url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth}`,
+            },
+            body: JSON.stringify({
+              product: product._id,
+              quantity,
+            }),
+          });
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.message || "Something went wrong!");
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
     }
   };
 
   const login = (data: User, token: string) => {
-    const userCart = data.cart;
-    data.cart = undefined;
+    const userCart: { product: Product; quantity: number }[] | undefined =
+      data.userCartProducts;
+    data.userCartProducts = [];
     localStorage.setItem("auth", token);
     localStorage.setItem("user", JSON.stringify(data));
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(userCart));
     setIsAuthenticated(true);
     setToken(token);
     setUser({
@@ -112,10 +137,10 @@ export const AuthContextProvider = ({
       const user = localStorage.getItem("user");
       const cart = localStorage.getItem("cart");
       if (auth && user) {
-        if (cart) {
-          setCart(JSON.parse(cart));
-        }
-        login(JSON.parse(user), auth);
+        const parsedUser = JSON.parse(user);
+        const parsedCart = JSON.parse(cart || "[]");
+        parsedUser.userCartProducts = parsedCart;
+        login(parsedUser, auth);
       }
     }
     setLoading(false);

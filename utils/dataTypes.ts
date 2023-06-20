@@ -18,7 +18,7 @@ export interface Order {
 export interface User {
   userName?: string;
   email?: string;
-  cart?: { product: Product; quantity: number }[];
+  userCartProducts?: { product: Product; quantity: number }[];
   orders?: Order[];
 }
 
