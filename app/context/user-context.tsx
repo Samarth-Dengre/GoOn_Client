@@ -13,8 +13,9 @@ const AuthContext = createContext<AuthContextProps>({
   token: "",
   login: (data: User, token: string) => {},
   logout: () => {},
-  cart: [],
-  addToCart: (product: Product, quantity: number) => {},
+  cartSize: 0,
+  addToCart: async (product: Product, quantity: number, seller: string) =>
+    false,
 });
 
 export const AuthContextProvider = ({
@@ -27,45 +28,20 @@ export const AuthContextProvider = ({
   const [user, setUser] = useState<User>({});
   const [token, setToken] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
-  const [cart, setCart] = useState<{ product: Product; quantity: number }[]>(
-    []
-  );
+  const [cartSize, setCartSize] = useState<number>(0);
 
-  const addToCart = async (product: Product, quantity: number) => {
-    let cartData;
-    if (quantity < 0) {
-      // remove that much quantity from cart
-      const productIndex = cart.findIndex(
-        (cartProduct) => cartProduct.product._id === product._id
-      );
-      if (productIndex !== -1) {
-        cartData = [...cart];
-        cartData[productIndex].quantity -= 1;
-        if (cartData[productIndex].quantity === 0) {
-          cartData.splice(productIndex, 1);
-        }
-        setCart(cartData);
-        localStorage.setItem("cart", JSON.stringify(cartData));
-      }
-    } else {
-      const productIndex = cart.findIndex(
-        (cartProduct) => cartProduct.product._id === product._id
-      );
-      if (productIndex !== -1) {
-        cartData = [...cart];
-        cartData[productIndex].quantity += 1;
-        setCart(cartData);
-        localStorage.setItem("cart", JSON.stringify(cartData));
-      } else {
-        cartData = [...cart, { product, quantity }];
-        setCart(cartData);
-        localStorage.setItem("cart", JSON.stringify(cartData));
-      }
-    }
-
+  const addToCart = async (
+    product: Product,
+    quantity: number,
+    seller: string
+  ): Promise<boolean> => {
     if (isAuthenticated) {
       const auth = token;
       if (auth) {
+        if (cartSize + quantity < 0) {
+          return false;
+        }
+        setCartSize((prev) => prev + quantity);
         try {
           const response = await fetch(manageCart_url, {
             method: "POST",
@@ -76,50 +52,52 @@ export const AuthContextProvider = ({
             body: JSON.stringify({
               product: product._id,
               quantity,
+              seller,
             }),
           });
           const data = await response.json();
           if (!response.ok) {
-            throw new Error(data.message || "Something went wrong!");
+            setCartSize((prev) => prev - quantity);
+            if (response.statusText === "Unauthorized") {
+              logout();
+            }
+            return false;
           }
+          return true;
         } catch (err) {
           console.log(err);
+          setCartSize((prev) => prev - quantity);
+          return false;
         }
       }
     }
+    return false;
   };
 
-  const login = (data: User, token: string) => {
+  const login = (data: User, token: string, cartSize: number) => {
     const userCart: { product: Product; quantity: number }[] | undefined =
       data.userCartProducts;
     data.userCartProducts = [];
     localStorage.setItem("auth", token);
     localStorage.setItem("user", JSON.stringify(data));
-    localStorage.setItem("cart", JSON.stringify(userCart));
+    localStorage.setItem("cartSize", cartSize.toString());
     setIsAuthenticated(true);
     setToken(token);
     setUser({
       userName: data.userName,
       email: data.email,
     });
-    setCart(
-      userCart
-        ? userCart.map((cartItem) => ({
-            product: cartItem.product,
-            quantity: cartItem.quantity,
-          }))
-        : []
-    );
+    setCartSize(cartSize);
   };
 
   const logout = () => {
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
-    localStorage.removeItem("cart");
+    localStorage.removeItem("cartSize");
     setIsAuthenticated(false);
     setUser({});
     setToken("");
-    setCart([]);
+    setCartSize(0);
     router.push("/");
   };
 
@@ -131,16 +109,15 @@ export const AuthContextProvider = ({
       const decodedData = JSON.parse(
         Buffer.from(encodedData, "base64").toString()
       );
-      login(decodedData, accessToken);
+      login(decodedData, accessToken, 0);
     } else {
       const auth = localStorage.getItem("auth");
       const user = localStorage.getItem("user");
-      const cart = localStorage.getItem("cart");
+      const cartSize = localStorage.getItem("cartSize");
       if (auth && user) {
-        const parsedUser = JSON.parse(user);
-        const parsedCart = JSON.parse(cart || "[]");
-        parsedUser.userCartProducts = parsedCart;
-        login(parsedUser, auth);
+        login(JSON.parse(user), auth, parseInt(cartSize || "0"));
+      } else {
+        logout();
       }
     }
     setLoading(false);
@@ -154,7 +131,7 @@ export const AuthContextProvider = ({
         token,
         login,
         logout,
-        cart,
+        cartSize,
         addToCart,
       }}
     >

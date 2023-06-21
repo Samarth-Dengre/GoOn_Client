@@ -5,7 +5,15 @@ import ButtonsContainer from "./ButtonsContainer";
 import RatingStars from "../CustomComponents/RatingStars";
 import Icons from "../CustomComponents/Icons";
 
-const ProductCard = ({ product, price }: { product: Product, price: number }) => {
+const ProductCard = ({
+  product,
+  price,
+  seller,
+}: {
+  product: Product;
+  price: number;
+  seller: string;
+}) => {
   return (
     <div className={styles.product__container}>
       <div className={styles.product__image__container}>
@@ -36,12 +44,12 @@ const ProductCard = ({ product, price }: { product: Product, price: number }) =>
         <p className={styles.product__details__container__text}>
           <strong>Product Rating: </strong>
           <RatingStars
-            value={product.productrating.rating}
-            count={product.productrating.numReviews}
+            value={product.productrating?.rating || 0}
+            count={product.productrating?.numReviews || 0}
           />
         </p>
       </div>
-      <ButtonsContainer product={product} />
+      <ButtonsContainer product={product} seller={seller} />
     </div>
   );
 };

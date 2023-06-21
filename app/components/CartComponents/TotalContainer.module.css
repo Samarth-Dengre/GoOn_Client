@@ -1,0 +1,88 @@
+.total_container_text {
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.1rem;
+  flex-wrap: wrap;
+  margin: 0 0.5rem;
+}
+
+.total_separator {
+  border-bottom: 1px solid black;
+  margin: 0.5rem 0;
+}
+
+.coupon_input_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.coupon_input {
+  width: 80%;
+  height: 2rem;
+  padding: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.coupon_apply_button {
+  background-color: #f0c040;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.buttons_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.checkout_button {
+  background-color: #f0c040;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 810px) {
+  .total_container_text {
+    font-size: 0.8rem;
+  }
+
+  .coupon_input_container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .coupon_input {
+    width: 100%;
+    padding: 0.5rem 0;
+  }
+
+  .coupon_apply_button {
+    width: 100%;
+  }
+
+  .buttons_container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .checkout_button {
+    width: 100%;
+  }
+}

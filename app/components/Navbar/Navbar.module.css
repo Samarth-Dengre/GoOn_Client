@@ -21,10 +21,8 @@
 }
 
 .cartIcon {
-  width: 2rem;
-  height: 2rem;
-  margin-right: 1rem;
   cursor: pointer;
+  
 }
 
 /* This part is the search bar container */

@@ -26,10 +26,10 @@ export interface Product {
   _id: string;
   productName: string;
   productDescription?: string;
-  productMRP: string;
+  productMRP: number;
   productImage: string[];
   productStore?: Store[];
-  productrating: {
+  productrating?: {
     rating: number;
     numReviews: number;
   };
@@ -39,10 +39,14 @@ export interface AuthContextProps {
   isAuthenticated: boolean;
   user: User;
   token: string;
-  login: (data: User, token: string) => void;
+  login: (data: User, token: string, cartSize: number) => void;
   logout: () => void;
-  cart: { product: Product; quantity: number }[];
-  addToCart: (product: Product, quantity: number) => void;
+  cartSize: number;
+  addToCart: (
+    product: Product,
+    quantity: number,
+    seller: string
+  ) => Promise<boolean>;
 }
 
 export interface Category {
@@ -64,5 +68,15 @@ export interface Store {
   storerating: {
     rating: number;
     numReviews: number;
+  };
+}
+
+export interface CartItems {
+  product: Product;
+  seller: {
+    id: string;
+    sellerName: string;
+    price: number;
+    quantity: number;
   };
 }

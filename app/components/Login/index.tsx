@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -62,7 +63,12 @@ export default function LoginForm({
     try {
       const response = await axios.post(login_url, formData);
       if (response.status === 200) {
-        authCtx.login(response.data.user, response.data.token);
+        authCtx.login(
+          response.data.user,
+          response.data.token,
+          response.data.cartSize
+        );
+        return;
       }
     } catch (err: any) {
       setMessage(err.response.data.message[0]);

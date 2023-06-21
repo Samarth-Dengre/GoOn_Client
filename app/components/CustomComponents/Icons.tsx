@@ -12,7 +12,7 @@ const Icons = ({
   color: string;
 }) => {
   const Icon = MUI[name] as React.ElementType;
-  return <Icon sx={{ fontSize: size, color: color }} />;
+  return <Icon sx={{ fontSize: size, color: color, margin: "auto" }} />;
 };
 
 export default Icons;

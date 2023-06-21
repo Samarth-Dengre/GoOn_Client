@@ -1,4 +1,3 @@
-import React from "react";
 import { fetch_store_by_id_url } from "@/utils/routes";
 import styles from "./StorePage.module.css";
 import Image from "next/image";
@@ -52,7 +51,8 @@ const StorePage = async ({ params }: { params: { id: string } }) => {
           </p>
           <p className={styles.store__details__right__container__text}>
             <strong>Store Rating: </strong>
-            <RatingStars value={store.storerating.rating} />
+            <RatingStars value={store.storerating.rating} />(
+            {store.storerating.numReviews})
           </p>
         </div>
         <div className={styles.store__details__description__container}>
@@ -80,6 +80,7 @@ const StorePage = async ({ params }: { params: { id: string } }) => {
             key={index}
             product={product.product}
             price={product.price}
+            seller={params.id}
           />
         ))}
       </div>
