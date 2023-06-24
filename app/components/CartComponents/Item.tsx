@@ -44,6 +44,17 @@ const Item = ({ product }: { product: CartItems }) => {
           >
             <Icons name="AttachMoney" size={15} color="black" />
             {product.seller.price}
+            {product.product.productMRP !== product.seller.price && (
+              <span
+                style={{
+                  textDecoration: "line-through",
+                  marginLeft: "10px",
+                  color: "red",
+                }}
+              >
+                {product.product.productMRP}
+              </span>
+            )}
           </div>
         </div>
         <div className={styles.product_details_container__text}>

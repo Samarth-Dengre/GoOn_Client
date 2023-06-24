@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -19,7 +19,7 @@ import {
   PasswordField,
   SubmitButton,
 } from "./styles";
-import CustomizedSnackbars from "../CustomComponents/SnackBar";
+import AuthContext from "@/app/context/user-context";
 
 export default function SignupForm({
   showLoginForm,
@@ -32,10 +32,7 @@ export default function SignupForm({
     email: "",
     confirmPassword: "",
   });
-  const [message, setMessage] = useState("");
-  const [severity, setSeverity] = useState("");
-  const [open, setOpen] = useState(false);
-
+  const authCtx = useContext(AuthContext);
   const [showPassword, setShowPassword]: [
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>
@@ -55,37 +52,38 @@ export default function SignupForm({
       formData.email === "" ||
       formData.confirmPassword === ""
     ) {
-      setMessage("Please fill all the fields");
-      setSeverity("error");
-      setOpen(true);
+      authCtx.setMessage("Please fill all the fields");
+      authCtx.setSeverity("info");
+      authCtx.setOpen(true);
       return;
     } else if (formData.email.includes("@") === false) {
-      setMessage("Please enter a valid email");
-      setSeverity("error");
-      setOpen(true);
+      authCtx.setMessage("Please enter a valid email");
+      authCtx.setSeverity("info");
+      authCtx.setOpen(true);
       return;
     } else if (formData.password !== formData.confirmPassword) {
-      setMessage("Passwords do not match");
-      setSeverity("error");
-      setOpen(true);
+      authCtx.setMessage("Passwords do not match");
+      authCtx.setSeverity("info");
+      authCtx.setOpen(true);
       return;
     } else if (formData.password.length < 6) {
-      setMessage("Password must be at least 6 characters long");
-      setSeverity("error");
-      setOpen(true);
+      authCtx.setMessage("Password must be atleast 6 characters long");
+      authCtx.setSeverity("info");
+      authCtx.setOpen(true);
       return;
     }
 
     // send data to server
     try {
       const response = await axios.post(signup_url, formData);
-      console.log(response);
-      setMessage(response.data.message[0]);
-      setSeverity("success");
+      authCtx.setMessage("Signup successful");
+      authCtx.setSeverity("success");
+      authCtx.setOpen(true);
     } catch (err: any) {
       console.log(err.response);
-      setMessage(err.response.data.message[0]);
-      setSeverity("error");
+      authCtx.setMessage(err.response.data.message);
+      authCtx.setSeverity("error");
+      authCtx.setOpen(true);
     }
   };
 
@@ -142,12 +140,6 @@ export default function SignupForm({
       <Button variant="contained" onClick={submitFormHandler} sx={SubmitButton}>
         Signup
       </Button>
-      <CustomizedSnackbars
-        message={message}
-        severity={severity}
-        open={open}
-        handleClose={() => setOpen(false)}
-      />
       <Box
         sx={{
           display: "flex",

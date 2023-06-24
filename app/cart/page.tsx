@@ -3,19 +3,17 @@ import { useEffect, useContext, useState } from "react";
 import styles from "./CartPage.module.css";
 import { fetch_user_cart_url } from "@/utils/routes";
 import AuthContext from "../context/user-context";
-import CustomizedSnackbars from "../components/CustomComponents/SnackBar";
 import TotalContainer from "../components/CartComponents/TotalContainer";
 import { CartItems } from "@/utils/dataTypes";
 import ItemsContainer from "../components/CartComponents/ItemsContainer";
 import Skeleton from "@mui/material/Skeleton";
+import { useRouter } from "next/navigation";
 
 const CartPage = () => {
   const authCtx = useContext(AuthContext);
   const [cart, setCart] = useState<CartItems[]>([]);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [severity, setSeverity] = useState("");
-  const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     try {
@@ -30,15 +28,13 @@ const CartPage = () => {
         setLoading(false);
         if (!res.ok) {
           if (res.statusText === "Unauthorized") {
-            setMessage("Please login to continue!");
-            setSeverity("error");
-            setOpen(true);
             authCtx.logout();
+            authCtx.setOpen(true);
+            authCtx.setMessage("Please login to continue");
+            authCtx.setSeverity("info");
+            router.push("/");
             return;
           }
-          setMessage("Something went wrong!");
-          setSeverity("error");
-          setOpen(true);
           return;
         }
         const data = await res.json();
@@ -91,12 +87,6 @@ const CartPage = () => {
           <TotalContainer cartItems={cart} />
         </div>
       </div>
-      <CustomizedSnackbars
-        open={open}
-        severity={severity}
-        message={message}
-        handleClose={() => setOpen(false)}
-      />
     </>
   );
 };

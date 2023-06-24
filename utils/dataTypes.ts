@@ -1,5 +1,10 @@
 import { MouseEventHandler } from "react";
 
+export interface LoginFormProps {
+  email: string;
+  password: string;
+}
+
 export interface CustomButtonProps {
   title: string | JSX.Element;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
@@ -25,28 +30,33 @@ export interface User {
 export interface Product {
   _id: string;
   productName: string;
-  productDescription?: string;
+  productDescription: string[];
   productMRP: number;
   productImage: string[];
-  productStore?: Store[];
-  productrating?: {
+  productrating: {
     rating: number;
     numReviews: number;
   };
+  productStores: { store: Store; price: number }[];
 }
 
 export interface AuthContextProps {
   isAuthenticated: boolean;
   user: User;
   token: string;
-  login: (data: User, token: string, cartSize: number) => void;
+  login: (formData: LoginFormProps) => void;
   logout: () => void;
   cartSize: number;
   addToCart: (
     product: Product,
     quantity: number,
     seller: string
-  ) => Promise<boolean>;
+  ) => Promise<void>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
+  setSeverity: React.Dispatch<
+    React.SetStateAction<"success" | "error" | "info">
+  >;
 }
 
 export interface Category {
@@ -64,7 +74,7 @@ export interface Store {
   storeCategory: Category[];
   storeImage: string;
   storeDescription?: string[];
-  storeProducts?: { product: Product; price: number }[];
+  storeProducts: { product: Product; price: number }[];
   storerating: {
     rating: number;
     numReviews: number;
@@ -79,4 +89,12 @@ export interface CartItems {
     price: number;
     quantity: number;
   };
+}
+
+export interface DeliveryAddress {
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+  landmark?: string;
 }

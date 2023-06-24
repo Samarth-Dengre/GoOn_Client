@@ -7,3 +7,5 @@ export const fetch_store_by_id_url: string = host + "/stores";
 export const fetch_products_by_id_url: string = host + "/products";
 export const manageCart_url: string = host + "/user/cart";
 export const fetch_user_cart_url: string = host + "/user/cart";
+export const rate_product_url: string = host + "/products/rate";
+export const checkout_url: string = host + "/user/checkout";

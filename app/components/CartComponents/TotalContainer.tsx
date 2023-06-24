@@ -1,14 +1,24 @@
-import { useEffect, useState } from "react";
-import { CartItems } from "@/utils/dataTypes";
+import { useContext, useEffect, useState } from "react";
+import { CartItems, DeliveryAddress } from "@/utils/dataTypes";
 import styles from "./TotalContainer.module.css";
 import CustomButton from "../CustomComponents/CustomButton";
 import AddressContainer from "./AddressContainer";
-import Skeleton from "@mui/material/Skeleton";
+import { checkout_url } from "@/utils/routes";
+import AuthContext from "@/app/context/user-context";
 
 const TotalContainer = ({ cartItems }: { cartItems: CartItems[] }) => {
   const [total, setTotal] = useState<string>("0");
   const [discount, setDiscount] = useState<string>("0");
   const [cartTotal, setCartTotal] = useState<string>("0");
+  const [coupon, setCoupon] = useState<string>("");
+  const [deliveryAddress, setDeliveryAddress] = useState<DeliveryAddress>({
+    pincode: "",
+    city: "",
+    state: "",
+    landmark: "",
+    address: "",
+  });
+  const authCtx = useContext(AuthContext);
   useEffect(() => {
     let cartSum = 0;
     let sum = 0;
@@ -24,6 +34,23 @@ const TotalContainer = ({ cartItems }: { cartItems: CartItems[] }) => {
     setDiscount(off.toFixed(2));
     setCartTotal(cartSum.toFixed(2));
   }, [cartItems]);
+
+  const checkOutHandler = async () => {
+    try {
+      const res = await fetch(checkout_url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authCtx.token}`,
+        },
+        body: JSON.stringify({ deliveryAddress: deliveryAddress }),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -56,12 +83,15 @@ const TotalContainer = ({ cartItems }: { cartItems: CartItems[] }) => {
       </div>
 
       <div className={styles.address_container}>
-        <AddressContainer />
+        <AddressContainer
+          deliveryAddress={deliveryAddress}
+          setDeliveryAddress={setDeliveryAddress}
+        />
       </div>
       <div className={styles.buttons_container}>
         <CustomButton
           title="Checkout"
-          handleClick={() => console.log("Checkout")}
+          handleClick={() => checkOutHandler()}
           className={styles.checkout_button}
           disabled={false}
         />

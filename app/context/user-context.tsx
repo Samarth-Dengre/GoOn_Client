@@ -3,19 +3,28 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Buffer } from "buffer";
-import { User, AuthContextProps, Product } from "../../utils/dataTypes";
+import {
+  User,
+  AuthContextProps,
+  Product,
+  LoginFormProps,
+} from "../../utils/dataTypes";
 import { CircularProgress } from "@mui/material";
 import { manageCart_url } from "@/utils/routes";
+import CustomizedSnackbars from "../components/CustomComponents/SnackBar";
+import { login_url } from "@/utils/routes";
 
 const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
   user: {},
   token: "",
-  login: (data: User, token: string) => {},
+  login: (formData: LoginFormProps) => {},
   logout: () => {},
   cartSize: 0,
-  addToCart: async (product: Product, quantity: number, seller: string) =>
-    false,
+  addToCart: async (product: Product, quantity: number, seller: string) => {},
+  setOpen: () => {},
+  setMessage: () => {},
+  setSeverity: () => {},
 });
 
 export const AuthContextProvider = ({
@@ -29,17 +38,24 @@ export const AuthContextProvider = ({
   const [token, setToken] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [cartSize, setCartSize] = useState<number>(0);
+  const [open, setOpen] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+  const [severity, setSeverity] = useState<"success" | "error" | "info">(
+    "success"
+  );
 
   const addToCart = async (
     product: Product,
     quantity: number,
     seller: string
-  ): Promise<boolean> => {
+  ): Promise<void> => {
     if (isAuthenticated) {
       const auth = token;
       if (auth) {
         if (cartSize + quantity < 0) {
-          return false;
+          setMessage("Invalid quantity");
+          setSeverity("error");
+          setOpen(true);
         }
         setCartSize((prev) => prev + quantity);
         try {
@@ -60,67 +76,108 @@ export const AuthContextProvider = ({
             setCartSize((prev) => prev - quantity);
             if (response.statusText === "Unauthorized") {
               logout();
+              setOpen(true);
+              setMessage("Please login to continue");
+              setSeverity("info");
             }
-            return false;
+            setMessage("Could not add the item to cart");
+            setSeverity("error");
+            setOpen(true);
           }
-          return true;
         } catch (err) {
           console.log(err);
           setCartSize((prev) => prev - quantity);
-          return false;
+          setMessage("Something went wrong");
+          setSeverity("error");
+          setOpen(true);
         }
       }
+    } else {
+      setMessage("Please login to continue");
+      setSeverity("info");
+      setOpen(true);
     }
-    return false;
   };
 
-  const login = (data: User, token: string, cartSize: number) => {
-    const userCart: { product: Product; quantity: number }[] | undefined =
-      data.userCartProducts;
-    data.userCartProducts = [];
-    localStorage.setItem("auth", token);
-    localStorage.setItem("user", JSON.stringify(data));
-    localStorage.setItem("cartSize", cartSize.toString());
-    setIsAuthenticated(true);
-    setToken(token);
-    setUser({
-      userName: data.userName,
-      email: data.email,
-    });
-    setCartSize(cartSize);
+  const login = async (formData: LoginFormProps) => {
+    try {
+      const response = await fetch(login_url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        setMessage("Invalid credentials");
+        setSeverity("error");
+        setOpen(true);
+        return;
+      }
+      const data = await response.json();
+
+      localStorage.setItem("auth", data.token);
+      setIsAuthenticated(true);
+      setToken(data.token);
+      setUser({
+        userName: data.user.userName,
+        email: data.user.email,
+      });
+      setCartSize(data.cartSize);
+      setMessage("Welcome back");
+      setSeverity("success");
+      setOpen(true);
+    } catch (err) {
+      console.log(err);
+      setMessage("Something went wrong");
+      setSeverity("error");
+      setOpen(true);
+    }
   };
 
   const logout = () => {
     localStorage.removeItem("auth");
-    localStorage.removeItem("user");
-    localStorage.removeItem("cartSize");
     setIsAuthenticated(false);
     setUser({});
     setToken("");
     setCartSize(0);
-    router.push("/");
   };
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const accessToken = urlParams.get("token");
-    const encodedData = urlParams.get("data");
-    if (accessToken && encodedData) {
-      const decodedData = JSON.parse(
-        Buffer.from(encodedData, "base64").toString()
-      );
-      login(decodedData, accessToken, 0);
-    } else {
-      const auth = localStorage.getItem("auth");
-      const user = localStorage.getItem("user");
-      const cartSize = localStorage.getItem("cartSize");
-      if (auth && user) {
-        login(JSON.parse(user), auth, parseInt(cartSize || "0"));
-      } else {
-        logout();
-      }
+    const auth = localStorage.getItem("auth");
+    try {
+      const validateToken = async () => {
+        if (auth) {
+          const response = await fetch(login_url, {
+            method: "Get",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth}`,
+            },
+          });
+          const data = await response.json();
+          if (response.ok) {
+            setIsAuthenticated(true);
+            setToken(data.token);
+            setUser({
+              userName: data.user.userName,
+              email: data.user.email,
+            });
+            setCartSize(data.cartSize);
+            localStorage.setItem("auth", data.token);
+          } else {
+            logout();
+            setMessage("Your session has expired. Please login again");
+            setSeverity("info");
+            setOpen(true);
+          }
+        }
+        setLoading(false);
+      };
+      validateToken();
+    } catch (err) {
+      console.log(err);
     }
-    setLoading(false);
   }, []);
 
   return (
@@ -133,8 +190,17 @@ export const AuthContextProvider = ({
         logout,
         cartSize,
         addToCart,
+        setOpen,
+        setMessage,
+        setSeverity,
       }}
     >
+      <CustomizedSnackbars
+        open={open}
+        handleClose={() => setOpen(false)}
+        message={message}
+        severity={severity}
+      />
       {loading ? <CircularProgress /> : children}
     </AuthContext.Provider>
   );

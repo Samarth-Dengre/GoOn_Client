@@ -39,6 +39,17 @@ const ProductCard = ({
           >
             <Icons name="AttachMoney" size={17} color="black" />
             {price}
+            {product.productMRP !== price && (
+              <span
+                style={{
+                  textDecoration: "line-through",
+                  marginLeft: "10px",
+                  color: "red",
+                }}
+              >
+                {product.productMRP}
+              </span>
+            )}
           </div>
         </p>
         <p className={styles.product__details__container__text}>

@@ -11,9 +11,6 @@ import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { InputFields, FormContainer, SubmitButton } from "./styles";
-import CustomizedSnackbars from "../CustomComponents/SnackBar";
-import { login_url } from "@/utils/routes";
-import axios from "axios";
 import AuthContext from "@/app/context/user-context";
 
 export default function LoginForm({
@@ -31,10 +28,6 @@ export default function LoginForm({
     React.Dispatch<React.SetStateAction<boolean>>
   ] = useState(false);
 
-  const [message, setMessage] = useState("");
-  const [severity, setSeverity] = useState("");
-  const [open, setOpen] = useState(false);
-
   const handleClickShowPassword = () =>
     setShowPassword((show: boolean) => !show);
 
@@ -44,38 +37,22 @@ export default function LoginForm({
     e.preventDefault();
     // check if all fields are filled and passwords match
     if (formData.email === "" || formData.password === "") {
-      setMessage("Please fill all the fields");
-      setSeverity("error");
-      setOpen(true);
+      authCtx.setMessage("Please fill all the fields");
+      authCtx.setSeverity("info");
+      authCtx.setOpen(true);
       return;
     } else if (formData.email.includes("@") === false) {
-      setMessage("Please enter a valid email");
-      setSeverity("error");
-      setOpen(true);
+      authCtx.setMessage("Please enter a valid email");
+      authCtx.setSeverity("info");
+      authCtx.setOpen(true);
       return;
     } else if (formData.password.length < 6) {
-      setMessage("Password must be atleast 6 characters long");
-      setSeverity("error");
-      setOpen(true);
+      authCtx.setMessage("Password must be atleast 6 characters long");
+      authCtx.setSeverity("info");
+      authCtx.setOpen(true);
       return;
     }
-    // send data to server
-    try {
-      const response = await axios.post(login_url, formData);
-      if (response.status === 200) {
-        authCtx.login(
-          response.data.user,
-          response.data.token,
-          response.data.cartSize
-        );
-        return;
-      }
-    } catch (err: any) {
-      setMessage(err.response.data.message[0]);
-      setSeverity("error");
-      setOpen(true);
-      return;
-    }
+    authCtx.login(formData);
   };
 
   return (
@@ -114,12 +91,6 @@ export default function LoginForm({
       <Button variant="contained" onClick={submitFormHandler} sx={SubmitButton}>
         Login
       </Button>
-      <CustomizedSnackbars
-        message={message}
-        severity={severity}
-        open={open}
-        handleClose={() => setOpen(false)}
-      />
       <Box
         sx={{
           display: "flex",

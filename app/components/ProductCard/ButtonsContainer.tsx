@@ -5,7 +5,6 @@ import CustomButton from "../CustomComponents/CustomButton";
 import AuthContext from "@/app/context/user-context";
 import { Product } from "@/utils/dataTypes";
 import { useRouter } from "next/navigation";
-import CustomizedSnackbars from "../CustomComponents/SnackBar";
 
 const ButtonsContainer = ({
   product,
@@ -16,29 +15,12 @@ const ButtonsContainer = ({
 }) => {
   const authCtx = useContext(AuthContext);
   const router = useRouter();
-  const isLoggedIn = authCtx.isAuthenticated;
-  const [showSnackBar, setShowSnackBar] = useState(false);
-  const [message, setMessage] = useState("");
-  const [severity, setSeverity] = useState<
-    "success" | "error" | "info" | "warning" | ""
-  >("");
   const viewItemHandler = () => {
     router.push(`/store/${seller}/${product.productName}-${product._id}`);
   };
 
   const addToCartHandler = async () => {
-    if (!isLoggedIn) {
-      setMessage("You need to login to add items to cart");
-      setSeverity("error");
-      setShowSnackBar(true);
-      return;
-    }
-    const result = await authCtx.addToCart(product, 1, seller);
-    if (result === false) {
-      setMessage("Unable to add item to cart");
-      setSeverity("error");
-      setShowSnackBar(true);
-    }
+    authCtx.addToCart(product, 1, seller);
   };
 
   return (
@@ -57,12 +39,6 @@ const ButtonsContainer = ({
           handleClick={viewItemHandler}
         />
       </div>
-      <CustomizedSnackbars
-        message={message}
-        open={showSnackBar}
-        handleClose={() => setShowSnackBar(false)}
-        severity={severity}
-      />
     </>
   );
 };
