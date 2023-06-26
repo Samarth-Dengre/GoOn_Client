@@ -11,7 +11,7 @@ import { CircularProgress } from "@mui/material";
 const Buttons = ({ product, seller }: { product: Product; seller: string }) => {
   const authCtx = useContext(AuthContext);
   const addToCartHandler = () => {
-    authCtx.addToCart(product, 1, seller);
+    authCtx.addToCart(product._id, 1, seller);
   };
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(0);

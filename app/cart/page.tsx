@@ -82,7 +82,7 @@ const CartPage = () => {
               />
             </div>
           ) : (
-            <ItemsContainer cartItems={cart} />
+            <ItemsContainer cartItems={cart} setCart={setCart}/>
           )}
         </div>
         <div className={styles.cart_container__total_container}>

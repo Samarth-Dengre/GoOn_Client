@@ -20,7 +20,7 @@ const ButtonsContainer = ({
   };
 
   const addToCartHandler = async () => {
-    authCtx.addToCart(product, 1, seller);
+    authCtx.addToCart(product._id, 1, seller);
   };
 
   return (

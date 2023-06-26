@@ -6,7 +6,20 @@ import Icons from "../CustomComponents/Icons";
 import Link from "next/link";
 import CustomButton from "../CustomComponents/CustomButton";
 
-const Item = ({ product }: { product: CartItems }) => {
+const Item = ({
+  index,
+  product,
+  manageItemQuantity,
+}: {
+  index: number;
+  product: CartItems;
+  manageItemQuantity: (
+    index: number,
+    quantity: number,
+    product: string,
+    seller: string
+  ) => void;
+}) => {
   return (
     <div className={styles.product_container}>
       <div className={styles.product_image_container}>
@@ -76,7 +89,12 @@ const Item = ({ product }: { product: CartItems }) => {
           <CustomButton
             title={<Icons name="Delete" size={20} color="black" />}
             handleClick={() => {
-              console.log("Remove");
+              manageItemQuantity(
+                index,
+                -product.seller.quantity,
+                product.product._id,
+                product.seller.id
+              );
             }}
             disabled={false}
             className={styles.buttons_container__button}

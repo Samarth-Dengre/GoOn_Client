@@ -49,7 +49,7 @@ export interface AuthContextProps {
   cartSize: number;
   setCartSize: React.Dispatch<React.SetStateAction<number>>;
   addToCart: (
-    product: Product,
+    product: string,
     quantity: number,
     seller: string
   ) => Promise<void>;

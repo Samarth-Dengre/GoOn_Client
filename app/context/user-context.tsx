@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import {
   User,
   AuthContextProps,
-  Product,
   LoginFormProps,
 } from "../../utils/dataTypes";
 import { CircularProgress } from "@mui/material";
@@ -21,7 +20,7 @@ const AuthContext = createContext<AuthContextProps>({
   logout: () => {},
   cartSize: 0,
   setCartSize: () => {},
-  addToCart: async (product: Product, quantity: number, seller: string) => {},
+  addToCart: async (product: string, quantity: number, seller: string) => {},
   setOpen: () => {},
   setMessage: () => {},
   setSeverity: () => {},
@@ -45,7 +44,7 @@ export const AuthContextProvider = ({
   );
 
   const addToCart = async (
-    product: Product,
+    product: string,
     quantity: number,
     seller: string
   ): Promise<void> => {
@@ -66,7 +65,7 @@ export const AuthContextProvider = ({
               Authorization: `Bearer ${auth}`,
             },
             body: JSON.stringify({
-              product: product._id,
+              product: product,
               quantity,
               seller,
             }),
