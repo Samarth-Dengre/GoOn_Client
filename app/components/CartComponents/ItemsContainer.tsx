@@ -1,8 +1,12 @@
+"use client";
 import { CartItems } from "@/utils/dataTypes";
 import styles from "./ItemsContainer.module.css";
 import Item from "./Item";
 import { useContext } from "react";
 import AuthContext from "@/app/context/user-context";
+import { useState } from "react";
+import Backdrop from "../Backdrop";
+import { CircularProgress } from "@mui/material";
 
 const ItemsContainer = ({
   cartItems,
@@ -11,25 +15,38 @@ const ItemsContainer = ({
   cartItems: CartItems[];
   setCart: React.Dispatch<React.SetStateAction<CartItems[]>>;
 }) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const authCtx = useContext(AuthContext);
-  const manageItemHandler = (
+  const manageItemHandler = async (
     index: number,
     quantity: number,
     product: string,
     seller: string
   ) => {
-    if (quantity === 1) {
+    if (quantity < 0 && Math.abs(quantity) > cartItems[index].seller.quantity) {
+      authCtx.setMessage("Quantity cannot be less than 0");
+      authCtx.setSeverity("info");
+      authCtx.setOpen(true);
+      return;
+    }
+    if (quantity > 0) {
       const newCartItems = cartItems.map((item, i) => {
         if (i === index) {
           return {
-            ...item,
-            quantity,
+            product: item.product,
+            seller: {
+              ...item.seller,
+              quantity: item.seller.quantity + quantity,
+            },
           };
         }
         return item;
       });
       setCart(newCartItems);
-    } else if (quantity === -1) {
+    } else if (
+      quantity < 0 &&
+      Math.abs(quantity) < cartItems[index].seller.quantity
+    ) {
       if (cartItems[index].seller.quantity === 1) {
         const newCartItems = cartItems.filter((item, i) => i !== index);
         setCart(newCartItems);
@@ -37,20 +54,26 @@ const ItemsContainer = ({
         const newCartItems = cartItems.map((item, i) => {
           if (i === index) {
             return {
-              ...item,
-              quantity: item.seller.quantity - 1,
+              product: item.product,
+              seller: {
+                ...item.seller,
+                quantity: item.seller.quantity + quantity,
+              },
             };
           }
           return item;
         });
         setCart(newCartItems);
       }
-    } else {
+    } else if (Math.abs(quantity) === cartItems[index].seller.quantity) {
       const newCartItems = cartItems.filter((item, i) => i !== index);
       setCart(newCartItems);
     }
-    authCtx.addToCart(product, quantity, seller);
+    setLoading(true);
+    await authCtx.addToCart(product, quantity, seller);
+    setLoading(false);
   };
+
   return (
     <div className={styles.container}>
       {cartItems.length === 0 ? (
@@ -65,12 +88,22 @@ const ItemsContainer = ({
       ) : (
         cartItems.map((item: CartItems, index: number) => {
           return (
-            <Item
-              key={index}
-              product={item}
-              index={index}
-              manageItemQuantity={manageItemHandler}
-            />
+            <>
+              {loading && (
+                <Backdrop>
+                  <div className={styles.loading_container}>
+                    Please Wait, Updating Cart...
+                    <CircularProgress size={30} />
+                  </div>
+                </Backdrop>
+              )}
+              <Item
+                key={index}
+                product={item}
+                index={index}
+                manageItemQuantity={manageItemHandler}
+              />
+            </>
           );
         })
       )}

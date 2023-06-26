@@ -1,5 +1,5 @@
 import { CartItems } from "@/utils/dataTypes";
-import React from "react";
+import { useState, useContext } from "react";
 import styles from "./Item.module.css";
 import Image from "next/image";
 import Icons from "../CustomComponents/Icons";
@@ -20,6 +20,20 @@ const Item = ({
     seller: string
   ) => void;
 }) => {
+  const [quantity, setQuantity] = useState<number>(product.seller.quantity);
+  const [isQuantityChanged, setIsQuantityChanged] = useState<boolean>(false);
+
+  const editQuantityHandler = async () => {
+    setIsQuantityChanged(false);
+    if (quantity === product.seller.quantity) return;
+    await manageItemQuantity(
+      index,
+      quantity - product.seller.quantity,
+      product.product._id,
+      product.seller.id
+    );
+  };
+
   return (
     <div className={styles.product_container}>
       <div className={styles.product_image_container}>
@@ -56,7 +70,7 @@ const Item = ({
             }}
           >
             <Icons name="AttachMoney" size={15} color="black" />
-            {product.seller.price}
+            {product.seller.price.toFixed(2)}
             {product.product.productMRP !== product.seller.price && (
               <span
                 style={{
@@ -86,15 +100,49 @@ const Item = ({
           </div>
         </div>
         <div className={styles.buttons_container}>
+          <div className={styles.editQuantityContainer}>
+            <CustomButton
+              title={<Icons name="Add" size={20} color="black" />}
+              handleClick={() => {
+                setQuantity(quantity + 1);
+                setIsQuantityChanged(true);
+              }}
+              disabled={false}
+              className={styles.buttons_container__button}
+            />
+            <input
+              type="number"
+              value={quantity}
+              readOnly
+              className={styles.quantityInput}
+            />
+            <CustomButton
+              title={<Icons name="Remove" size={20} color="black" />}
+              handleClick={() => {
+                setQuantity(quantity - 1);
+                setIsQuantityChanged(true);
+              }}
+              disabled={false}
+              className={styles.buttons_container__button}
+            />
+          </div>
           <CustomButton
-            title={<Icons name="Delete" size={20} color="black" />}
-            handleClick={() => {
-              manageItemQuantity(
-                index,
-                -product.seller.quantity,
-                product.product._id,
-                product.seller.id
-              );
+            title={
+              <Icons
+                name={isQuantityChanged ? "Save" : `Delete`}
+                size={20}
+                color="black"
+              />
+            }
+            handleClick={async () => {
+              isQuantityChanged
+                ? editQuantityHandler()
+                : await manageItemQuantity(
+                    index,
+                    -product.seller.quantity,
+                    product.product._id,
+                    product.seller.id
+                  );
             }}
             disabled={false}
             className={styles.buttons_container__button}

@@ -1,11 +1,11 @@
 "use client";
 import styles from "./Backdrop.module.css";
 const Backdrop = (props: {
-  hideBackdrop: () => void;
+  hideBackdrop?: () => void;
   children: React.ReactNode;
 }) => {
   return (
-    <div onClick={props.hideBackdrop} className={styles.main}>
+    <div onClick={props?.hideBackdrop} className={styles.main}>
       <div className={styles.child} onClick={(e) => e.stopPropagation()}>
         {props.children}
       </div>

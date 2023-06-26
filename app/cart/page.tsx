@@ -47,6 +47,10 @@ const CartPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    console.log(cart);
+  }, [cart]);
+
   return (
     <>
       <div className={styles.cart_container}>
@@ -82,7 +86,7 @@ const CartPage = () => {
               />
             </div>
           ) : (
-            <ItemsContainer cartItems={cart} setCart={setCart}/>
+            <ItemsContainer cartItems={cart} setCart={setCart} />
           )}
         </div>
         <div className={styles.cart_container__total_container}>
