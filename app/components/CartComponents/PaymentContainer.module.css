@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.modeContainer {
+  display: flex;
+  padding: 0.7rem;
+  width: max-content;
+  min-width: 8rem;
+  background-color: rgb(0, 119, 255);
+  color: white;
+  font-weight: 600;
+  font-family: var(--font-mukta);
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.2);
+}
+
+.modeContainer:hover {
+  background-color: rgb(0, 119, 255, 0.8);
+  cursor: pointer;
+}
+
+.selectedModeContainer {
+  background-color: green;
+}
+
+.selectedModeContainer:hover {
+  background-color: green;
+}

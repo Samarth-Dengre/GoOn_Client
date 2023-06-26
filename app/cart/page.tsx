@@ -15,6 +15,7 @@ const CartPage = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  // This useEffect is used to fetch the cart items from the database
   useEffect(() => {
     try {
       const getUserCart = async () => {
@@ -52,6 +53,7 @@ const CartPage = () => {
         <div className={styles.cart_container__items_container}>
           {loading ? (
             <div>
+              {/* These skeetons are rendered while the cart items are being fetched from database */}
               <Skeleton
                 variant="rectangular"
                 width={2000}
@@ -84,7 +86,7 @@ const CartPage = () => {
           )}
         </div>
         <div className={styles.cart_container__total_container}>
-          <TotalContainer cartItems={cart} />
+          <TotalContainer cartItems={cart} setCart={setCart} />
         </div>
       </div>
     </>

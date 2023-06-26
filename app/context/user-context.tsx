@@ -2,7 +2,6 @@
 
 import React, { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Buffer } from "buffer";
 import {
   User,
   AuthContextProps,
@@ -21,6 +20,7 @@ const AuthContext = createContext<AuthContextProps>({
   login: (formData: LoginFormProps) => {},
   logout: () => {},
   cartSize: 0,
+  setCartSize: () => {},
   addToCart: async (product: Product, quantity: number, seller: string) => {},
   setOpen: () => {},
   setMessage: () => {},
@@ -189,6 +189,7 @@ export const AuthContextProvider = ({
         login,
         logout,
         cartSize,
+        setCartSize,
         addToCart,
         setOpen,
         setMessage,

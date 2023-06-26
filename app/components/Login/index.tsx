@@ -35,7 +35,7 @@ export default function LoginForm({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    // check if all fields are filled and passwords match
+    // check if all fields are filled and valid
     if (formData.email === "" || formData.password === "") {
       authCtx.setMessage("Please fill all the fields");
       authCtx.setSeverity("info");

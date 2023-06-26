@@ -47,6 +47,7 @@ export interface AuthContextProps {
   login: (formData: LoginFormProps) => void;
   logout: () => void;
   cartSize: number;
+  setCartSize: React.Dispatch<React.SetStateAction<number>>;
   addToCart: (
     product: Product,
     quantity: number,
