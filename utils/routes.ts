@@ -9,3 +9,4 @@ export const manageCart_url: string = host + "/user/cart";
 export const fetch_user_cart_url: string = host + "/user/cart";
 export const rate_product_url: string = host + "/products/rate";
 export const checkout_url: string = host + "/orders";
+export const fetch_user_orders_url: string = host + "/orders";

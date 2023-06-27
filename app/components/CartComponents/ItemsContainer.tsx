@@ -29,7 +29,10 @@ const ItemsContainer = ({
       authCtx.setOpen(true);
       return;
     }
-    if (quantity > 0) {
+    if (Math.abs(quantity) === cartItems[index].seller.quantity) {
+      const newCartItems = cartItems.filter((item, i) => i !== index);
+      setCart(newCartItems);
+    } else {
       const newCartItems = cartItems.map((item, i) => {
         if (i === index) {
           return {
@@ -43,31 +46,6 @@ const ItemsContainer = ({
         return item;
       });
       setCart(newCartItems);
-    } else if (
-      quantity < 0 &&
-      Math.abs(quantity) < cartItems[index].seller.quantity
-    ) {
-      if (cartItems[index].seller.quantity === 1) {
-        const newCartItems = cartItems.filter((item, i) => i !== index);
-        setCart(newCartItems);
-      } else {
-        const newCartItems = cartItems.map((item, i) => {
-          if (i === index) {
-            return {
-              product: item.product,
-              seller: {
-                ...item.seller,
-                quantity: item.seller.quantity + quantity,
-              },
-            };
-          }
-          return item;
-        });
-        setCart(newCartItems);
-      }
-    } else if (Math.abs(quantity) === cartItems[index].seller.quantity) {
-      const newCartItems = cartItems.filter((item, i) => i !== index);
-      setCart(newCartItems);
     }
     setLoading(true);
     await authCtx.addToCart(product, quantity, seller);
@@ -79,7 +57,7 @@ const ItemsContainer = ({
       {cartItems.length === 0 ? (
         <p
           style={{
-            margin: "1rem 0",
+            margin: "1rem",
             fontSize: "1.5rem",
           }}
         >

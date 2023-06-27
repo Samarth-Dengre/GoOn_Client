@@ -99,3 +99,18 @@ export interface DeliveryAddress {
   pincode: string;
   landmark?: string;
 }
+
+export interface OrderDetails {
+  _id: string;
+  total: string;
+  orderStatus: string;
+  orderItems: {
+    product: Product;
+    store: Store;
+    quantity: number;
+    price: number;
+  }[];
+  modeOfPayment: string;
+  deliveryAddress: DeliveryAddress;
+  createdAt: Date;
+}

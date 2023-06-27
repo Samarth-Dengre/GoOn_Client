@@ -4,6 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Person2 } from "@mui/icons-material";
 import AuthContext from "@/app/context/user-context";
+import { useRouter } from "next/navigation";
 
 export default function ProfileIcon() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -15,6 +16,7 @@ export default function ProfileIcon() {
     setAnchorEl(null);
   };
 
+  const router = useRouter();
   const authCtx = useContext(AuthContext);
 
   return (
@@ -46,7 +48,14 @@ export default function ProfileIcon() {
         }}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem
+          onClick={() => {
+            router.push("/orders");
+            handleClose();
+          }}
+        >
+          My Orders
+        </MenuItem>
         <MenuItem onClick={() => authCtx.logout()}>Logout</MenuItem>
       </Menu>
     </div>

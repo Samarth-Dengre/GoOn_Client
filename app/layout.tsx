@@ -2,6 +2,7 @@ import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 import { AuthContextProvider } from "@/app/context/user-context";
 import { Lato, Mukta } from "next/font/google";
+import "./globals.css";
 
 export const metadata = {
   title: "Create Next App",
@@ -32,12 +33,19 @@ export default function RootLayout({
           style={{
             margin: 0,
             padding: 0,
-            minHeight: "100vh",
           }}
         >
           <AuthContextProvider>
             <Navbar />
-            {children}
+            <div
+              style={{
+                margin: "0",
+                padding: "0",
+                minHeight: "82vh",
+              }}
+            >
+              {children}
+            </div>
             <Footer />
           </AuthContextProvider>
         </body>
