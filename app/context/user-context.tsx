@@ -2,11 +2,7 @@
 
 import React, { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  User,
-  AuthContextProps,
-  LoginFormProps,
-} from "../../utils/dataTypes";
+import { User, AuthContextProps, LoginFormProps } from "../../utils/dataTypes";
 import { CircularProgress } from "@mui/material";
 import { manageCart_url } from "@/utils/routes";
 import CustomizedSnackbars from "../components/CustomComponents/SnackBar";
@@ -201,7 +197,20 @@ export const AuthContextProvider = ({
         message={message}
         severity={severity}
       />
-      {loading ? <CircularProgress /> : children}
+      {loading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 };

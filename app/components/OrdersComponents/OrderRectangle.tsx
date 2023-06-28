@@ -11,7 +11,7 @@ const OrderRectangle = ({ order }: { order: OrderDetails }) => {
   return (
     <div className={styles.container} onClick={handleClick}>
       <div className={styles.imagesContainer}>
-        {order.orderItems.slice(0, 3).map((item, index) => (
+        {order.orderItems?.slice(0, 3).map((item, index) => (
           <Image
             src={item.product.productImage[0]}
             alt="Image of the product"
@@ -20,7 +20,7 @@ const OrderRectangle = ({ order }: { order: OrderDetails }) => {
             className={styles.image}
           />
         ))}
-        {order.orderItems.length > 3 && (
+        {order.orderItems && order.orderItems.length > 3 && (
           <div className={styles.moreItems}>
             <span>+{order.orderItems.length - 3}</span>
           </div>
