@@ -3,6 +3,7 @@ import Navbar from "@/app/components/Navbar";
 import { AuthContextProvider } from "@/app/context/user-context";
 import { Lato, Mukta } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "Create Next App",
@@ -48,6 +49,7 @@ export default function RootLayout({
             </div>
             <Footer />
           </AuthContextProvider>
+          <Analytics />
         </body>
       </html>
     </>
