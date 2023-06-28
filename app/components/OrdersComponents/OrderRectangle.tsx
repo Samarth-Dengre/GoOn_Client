@@ -1,10 +1,15 @@
 import { OrderDetails } from "@/utils/dataTypes";
 import styles from "./OrderRectangle.module.css";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const OrderRectangle = ({ order }: { order: OrderDetails }) => {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push(`/orders/${order._id}`);
+  };
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleClick}>
       <div className={styles.imagesContainer}>
         {order.orderItems.slice(0, 3).map((item, index) => (
           <Image

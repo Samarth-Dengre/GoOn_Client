@@ -1,5 +1,5 @@
 import { CartItems } from "@/utils/dataTypes";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import styles from "./Item.module.css";
 import Image from "next/image";
 import Icons from "../CustomComponents/Icons";

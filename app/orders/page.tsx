@@ -51,7 +51,7 @@ const Orders = () => {
       authCtx.setSeverity("error");
       authCtx.setOpen(true);
     }
-  }, []);
+  }, [authCtx.token]);
 
   return (
     <>
@@ -59,20 +59,20 @@ const Orders = () => {
         <div className={styles.skeletonContainer}>
           <Skeleton
             variant="rectangular"
-            width={2000}
-            height={150}
+            width={300}
+            height={300}
             style={{ marginBottom: "1rem" }}
           />
           <Skeleton
             variant="rectangular"
-            width={2000}
-            height={150}
+            width={300}
+            height={300}
             style={{ marginBottom: "1rem" }}
           />
           <Skeleton
             variant="rectangular"
-            width={2000}
-            height={150}
+            width={300}
+            height={300}
             style={{ marginBottom: "1rem" }}
           />
         </div>

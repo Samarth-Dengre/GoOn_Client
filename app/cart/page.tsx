@@ -45,11 +45,7 @@ const CartPage = () => {
     } catch (err) {
       console.log(err);
     }
-  }, []);
-
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
+  }, [authCtx.token]);
 
   return (
     <>

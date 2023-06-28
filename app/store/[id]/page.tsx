@@ -20,6 +20,7 @@ const StorePage = async ({ params }: { params: { id: string } }) => {
   }: {
     store: Store;
   } = await getStore(params.id);
+  
   return (
     <div className={styles.container}>
       <div className={styles.store__details}>

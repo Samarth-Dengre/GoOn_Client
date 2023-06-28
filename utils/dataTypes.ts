@@ -101,10 +101,10 @@ export interface DeliveryAddress {
 }
 
 export interface OrderDetails {
-  _id: string;
+  _id?: string;
   total: string;
   orderStatus: string;
-  orderItems: {
+  orderItems?: {
     product: Product;
     store: Store;
     quantity: number;
@@ -114,3 +114,5 @@ export interface OrderDetails {
   deliveryAddress: DeliveryAddress;
   createdAt: Date;
 }
+
+
