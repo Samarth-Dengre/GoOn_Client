@@ -1,3 +1,5 @@
+export const dynamicParams = true;
+
 import { NextResponse } from "next/server";
 import Fuse from "fuse.js";
 import mongoose from "mongoose";
