@@ -54,8 +54,9 @@ export default function LoginForm({
       authCtx.setOpen(true);
       return;
     }
-
+    setLoading(true);
     await authCtx.login(formData);
+    setLoading(false);
   };
 
   return (
