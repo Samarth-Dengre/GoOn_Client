@@ -8,7 +8,7 @@ import RatingStars from "@/app/components/CustomComponents/RatingStars";
 const getStore = async (id: string) => {
   const res = await fetch(`${fetch_store_by_id_url}/${id}`, {
     method: "GET",
-    cache: "no-cache",
+    next: { revalidate: 3600 },
   });
   const store = await res.json();
   return store;
