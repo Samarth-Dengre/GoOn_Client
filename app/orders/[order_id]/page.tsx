@@ -8,6 +8,11 @@ import { fetch_user_orders_url } from "@/utils/routes";
 import { Skeleton } from "@mui/material";
 import ItemContainer from "@/app/components/OrdersComponents/ItemContainer";
 
+export const metadata = {
+  title: "Order Details",
+  description: "See your order details here",
+};
+
 const OrderDetails = ({
   params,
 }: {
@@ -37,6 +42,9 @@ const OrderDetails = ({
           authCtx.setOpen(true);
           authCtx.logout();
           return;
+        }
+        if (!response.ok) {
+          throw new Error("Something went wrong");
         }
         const data = await response.json();
         setOrder(data);

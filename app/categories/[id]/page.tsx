@@ -4,6 +4,11 @@ import SingleStore from "../../components/StoreCard";
 import { Store } from "@/utils/dataTypes";
 import styles from "./Page.module.css";
 
+export const metadata = {
+  title: "Category",
+  description: "See all stores in this category",
+};
+
 const getCategoryId = (category: string) => {
   if (category === "grocery") return 3;
   if (category === "fashion") return 2;
@@ -48,7 +53,7 @@ const getSoreByCategory = async (category: string) => {
   const id = getCategoryId(category);
   const res = await fetch(`${fetch_store_by_categories_url}/?category=${id}`, {
     method: "GET",
-    next: { revalidate: 10 },
+    next: { revalidate: 86400 },
   });
   const stores = await res.json();
   return stores;

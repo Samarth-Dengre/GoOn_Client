@@ -9,6 +9,11 @@ import ItemsContainer from "../components/CartComponents/ItemsContainer";
 import Skeleton from "@mui/material/Skeleton";
 import { useRouter } from "next/navigation";
 
+export const metadata = {
+  title: "Cart",
+  description: "See your cart items here",
+};
+
 const CartPage = () => {
   const authCtx = useContext(AuthContext);
   const [cart, setCart] = useState<CartItems[]>([]);

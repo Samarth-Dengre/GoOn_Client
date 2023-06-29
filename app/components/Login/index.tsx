@@ -12,6 +12,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { InputFields, FormContainer, SubmitButton } from "./styles";
 import AuthContext from "@/app/context/user-context";
+import { CircularProgress } from "@mui/material";
 
 export default function LoginForm({
   showSignupForm,
@@ -23,6 +24,7 @@ export default function LoginForm({
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword]: [
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>
@@ -52,7 +54,8 @@ export default function LoginForm({
       authCtx.setOpen(true);
       return;
     }
-    authCtx.login(formData);
+
+    await authCtx.login(formData);
   };
 
   return (
@@ -89,7 +92,16 @@ export default function LoginForm({
         />
       </FormControl>
       <Button variant="contained" onClick={submitFormHandler} sx={SubmitButton}>
-        Login
+        {loading ? (
+          <CircularProgress
+            size={25}
+            sx={{
+              color: "white",
+            }}
+          />
+        ) : (
+          "Login"
+        )}
       </Button>
       <Box
         sx={{

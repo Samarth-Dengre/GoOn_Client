@@ -8,6 +8,11 @@ import { useRouter } from "next/navigation";
 import { Skeleton } from "@mui/material";
 import OrderRectangle from "../components/OrdersComponents/OrderRectangle";
 
+export const metadata = {
+  title: "Orders",
+  description: "See your orders here",
+};
+
 const Orders = () => {
   const [orders, setOrders] = useState<OrderDetails[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -33,6 +38,9 @@ const Orders = () => {
           authCtx.logout();
           router.replace("/");
           return;
+        }
+        if (!response.ok) {
+          throw new Error("Something went wrong");
         }
         const data = await response.json();
         // sort orders by date in descending order

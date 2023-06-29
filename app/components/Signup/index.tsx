@@ -20,6 +20,7 @@ import {
   SubmitButton,
 } from "./styles";
 import AuthContext from "@/app/context/user-context";
+import { CircularProgress } from "@mui/material";
 
 export default function SignupForm({
   showLoginForm,
@@ -32,6 +33,7 @@ export default function SignupForm({
     email: "",
     confirmPassword: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
   const authCtx = useContext(AuthContext);
   const [showPassword, setShowPassword]: [
     boolean,
@@ -75,7 +77,9 @@ export default function SignupForm({
 
     // send data to server
     try {
+      setLoading(true);
       const response = await axios.post(signup_url, formData);
+      setLoading(false);
       authCtx.setMessage("Signup successful");
       authCtx.setSeverity("success");
       authCtx.setOpen(true);
@@ -138,7 +142,7 @@ export default function SignupForm({
         />
       </Box>
       <Button variant="contained" onClick={submitFormHandler} sx={SubmitButton}>
-        Signup
+        {loading ? <CircularProgress /> : "Signup"}
       </Button>
       <Box
         sx={{

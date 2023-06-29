@@ -9,7 +9,7 @@ import { Store } from "@/utils/dataTypes";
 const getStores = async () => {
   const res = await fetch(fetch_stores_url, {
     method: "GET",
-    next: { revalidate: 10 },
+    next: { revalidate: 86400 },
   });
   const stores = await res.json();
   return stores;

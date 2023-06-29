@@ -13,7 +13,7 @@ const getProduct = async (product_id: string, store_id: string) => {
     fetch_products_by_id_url + "/" + id + "?store_id=" + store_id,
     {
       method: "GET",
-      next: { revalidate: 10 },
+      next: { revalidate: 86400 },
     }
   );
   const data = await res.json();
