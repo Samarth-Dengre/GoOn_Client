@@ -37,7 +37,7 @@ const Buttons = ({ product, seller }: { product: Product; seller: string }) => {
         },
       });
       setLoading(false);
-      if (res.statusText === "Unauthorized") {
+      if (res.statusText === "Unauthorized" || res.status === 401) {
         authCtx.setMessage("Please login to rate the product!");
         authCtx.setSeverity("info");
         authCtx.setOpen(true);
