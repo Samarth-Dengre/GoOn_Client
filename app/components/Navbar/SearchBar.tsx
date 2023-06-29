@@ -33,11 +33,14 @@ const SearchBar = () => {
   const searchHandler = async () => {
     try {
       setLoading(true);
-      const result = await fetch(`/api/search/?search=${searchValue}`, {
-        method: "Get",
+      const result = await fetch("/api/search", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          search: searchValue,
+        }),
       });
       setData(await result.json());
       setLoading(false);
