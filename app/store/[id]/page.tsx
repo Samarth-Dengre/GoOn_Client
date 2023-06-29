@@ -8,7 +8,7 @@ import RatingStars from "@/app/components/CustomComponents/RatingStars";
 const getStore = async (id: string) => {
   const res = await fetch(`${fetch_store_by_id_url}/${id}`, {
     method: "GET",
-    next: { revalidate: 86400 },
+    cache: "no-cache",
   });
   const store = await res.json();
   return store;
@@ -20,7 +20,7 @@ const StorePage = async ({ params }: { params: { id: string } }) => {
   }: {
     store: Store;
   } = await getStore(params.id);
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.store__details}>
