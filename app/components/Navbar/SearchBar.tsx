@@ -5,7 +5,6 @@ import { SearchRounded } from "@mui/icons-material";
 import Link from "next/link";
 import Image from "next/image";
 import { CircularProgress } from "@mui/material";
-import { host } from "@/utils/routes";
 
 document.addEventListener("click", function (event) {
   const searchResultsContainer = document.getElementById(
@@ -34,15 +33,12 @@ const SearchBar = () => {
   const searchHandler = async () => {
     try {
       setLoading(true);
-      const result = await fetch(
-        `${host}/stores/search/?search=${searchValue}`,
-        {
-          method: "Get",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const result = await fetch(`/api/search/?search=${searchValue}`, {
+        method: "Get",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       setData(await result.json());
       setLoading(false);
       const searchResultsContainer = document.getElementById(
