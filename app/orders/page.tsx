@@ -7,11 +7,7 @@ import AuthContext from "../context/user-context";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@mui/material";
 import OrderRectangle from "../components/OrdersComponents/OrderRectangle";
-
-export const metadata = {
-  title: "Orders",
-  description: "See your orders here",
-};
+import Head from "next/head";
 
 const Orders = () => {
   const [orders, setOrders] = useState<OrderDetails[]>([]);
@@ -63,6 +59,11 @@ const Orders = () => {
 
   return (
     <>
+      <Head>
+        <title>Orders | Go-on</title>
+        <meta name="description" content="Your orders" />
+      </Head>
+
       {loading ? (
         <div className={styles.skeletonContainer}>
           <Skeleton

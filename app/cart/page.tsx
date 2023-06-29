@@ -8,11 +8,7 @@ import { CartItems } from "@/utils/dataTypes";
 import ItemsContainer from "../components/CartComponents/ItemsContainer";
 import Skeleton from "@mui/material/Skeleton";
 import { useRouter } from "next/navigation";
-
-export const metadata = {
-  title: "Cart",
-  description: "See your cart items here",
-};
+import Head from "next/head";
 
 const CartPage = () => {
   const authCtx = useContext(AuthContext);
@@ -54,6 +50,10 @@ const CartPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Go-On | Cart</title>
+        <meta name="description" content="Your cart" />
+      </Head>
       <div className={styles.cart_container}>
         <div className={styles.cart_container__items_container}>
           {loading ? (

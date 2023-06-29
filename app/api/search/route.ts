@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Fuse from "fuse.js";
 import mongoose from "mongoose";
 
-export async function POST(request: Request) {
+export async function GET(request: Request) {
   try {
     const DATABASE_URL = process.env.DATABASE_URL as string;
     const connection = await mongoose.connect(DATABASE_URL);
@@ -15,9 +15,11 @@ export async function POST(request: Request) {
       keys: ["storeName"],
       threshold: 0.6,
     };
-    const searchTerm = await request.json();
+    const { searchParams } = new URL(request.url);
+    const toSearch = searchParams.get("search") as string;
+    if (!toSearch) return NextResponse.json([]);
     const fuse = new Fuse(stores, options);
-    const result = fuse.search(searchTerm.search).slice(0, 10);
+    const result = fuse.search(toSearch).slice(0, 10);
     return NextResponse.json(result);
   } catch (err) {
     console.log(err);

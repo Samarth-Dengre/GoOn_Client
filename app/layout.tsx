@@ -44,7 +44,7 @@ export default function RootLayout({
             </div>
             <Footer />
           </AuthContextProvider>
-          <Analytics />
+          <Analytics debug={false} />
         </body>
       </html>
     </>

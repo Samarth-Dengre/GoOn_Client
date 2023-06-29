@@ -7,11 +7,7 @@ import { OrderDetails } from "@/utils/dataTypes";
 import { fetch_user_orders_url } from "@/utils/routes";
 import { Skeleton } from "@mui/material";
 import ItemContainer from "@/app/components/OrdersComponents/ItemContainer";
-
-export const metadata = {
-  title: "Order Details",
-  description: "See your order details here",
-};
+import Head from "next/head";
 
 const OrderDetails = ({
   params,
@@ -61,6 +57,11 @@ const OrderDetails = ({
 
   return (
     <>
+      <Head>
+        <title>Order Details</title>
+        <meta name="description" content="Order Details" />
+      </Head>
+
       <div className={styles.container}>
         {isLoading ? (
           <>
