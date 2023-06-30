@@ -142,7 +142,16 @@ export default function SignupForm({
         />
       </Box>
       <Button variant="contained" onClick={submitFormHandler} sx={SubmitButton}>
-        {loading ? <CircularProgress /> : "Signup"}
+        {loading ? (
+          <CircularProgress
+            size={25}
+            sx={{
+              color: "white",
+            }}
+          />
+        ) : (
+          "Signup"
+        )}
       </Button>
       <Box
         sx={{

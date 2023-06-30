@@ -1,34 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# GoOn
 
-First, run the development server:
+GoOn is the perfect platform for your online shopping needs,
+offering a unique and innovative approach to ecommerce. With
+GoOn, we empower users to choose the shop from which they want to
+shop, giving them the flexibility and freedom to explore a wide
+range of options.
 
+
+## Tech Stack
+
+**Client:** NextJS(13.4), Typescript
+
+**Server:** NodeJS, NestJS, MongoDB
+
+**Server Repo**: https://github.com/Samarth-Dengre/GoOn_Server
+
+
+## Running This project
+
+To install all the packages run this command
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+    yarn install
+```
+add .env file and add a MongoDB url that is same as the url of MongoDB you are using for backend.
+```bash
+    DATABASE_URL=YOUR_URL
+```
+Now start the project using
+```bash
+    yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Optimizations
 
-## Learn More
+1. Made most of the components as **Server** components.
+2. For the search bar, used Fuse.js to search the storename.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
