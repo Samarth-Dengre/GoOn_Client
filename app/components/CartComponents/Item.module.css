@@ -67,7 +67,7 @@
 }
 
 /* media queries */
-@media screen and (max-width: 520px) and (min-width: 410px) {
+@media screen and (max-width: 520px) and (min-width: 420px) {
   .product_image {
     height: 100%;
     width: 200px;
@@ -79,7 +79,7 @@
   }
 }
 
-@media screen and (max-width: 410px) {
+@media screen and (max-width: 420px) {
   .product_image {
     height: 100%;
     width: 180px;
@@ -88,5 +88,27 @@
     font-size: 0.7rem;
     flex-direction: column;
     align-items: flex-start;
+  }
+  .buttons_container {
+    gap: 0.3rem;
+  }
+  .editQuantityContainer {
+    gap: 0;
+    justify-content: center;
+  }
+  .editQuantityContainer > .buttons_container__button {
+    padding: 0.3rem;
+    border-radius: 0;
+  }
+  .quantityInput {
+    width: 17px;
+    height: 20px;
+    border-radius: 0;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .buttons_container > .buttons_container__button {
+    padding: 0.3rem;
   }
 }
