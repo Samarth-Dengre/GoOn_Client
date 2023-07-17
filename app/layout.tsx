@@ -42,9 +42,7 @@ export default function RootLayout({
                 minHeight: "82vh",
               }}
             >
-              <Suspense fallback={<Loading />}>
-                {children}
-                </Suspense>
+              <Suspense fallback={<Loading />}>{children}</Suspense>
             </div>
             <Footer />
           </AuthContextProvider>
