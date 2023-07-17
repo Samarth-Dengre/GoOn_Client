@@ -68,7 +68,7 @@ const ItemsContainer = ({
           return (
             <>
               {loading && (
-                <Backdrop>
+                <Backdrop key={index}>
                   <div className={styles.loading_container}>
                     Please Wait, Updating Cart...
                     <CircularProgress size={30} />
