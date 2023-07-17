@@ -4,6 +4,8 @@ import { AuthContextProvider } from "@/app/context/user-context";
 import { Lato, Mukta } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -40,7 +42,9 @@ export default function RootLayout({
                 minHeight: "82vh",
               }}
             >
-              {children}
+              <Suspense fallback={<Loading />}>
+                {children}
+                </Suspense>
             </div>
             <Footer />
           </AuthContextProvider>
